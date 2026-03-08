@@ -6,8 +6,8 @@ export const STORE_NAME = "records";
 export const DEFAULT_SETTINGS = {
   whisperModel: "Xenova/whisper-tiny.en",
   whisperLanguage: "en",
-  qwenModel: "onnx-community/Qwen2.5-0.5B-Instruct",
-  qwenDtype: "q4",
+  qwenModel: "onnx-community/Olmo-Hybrid-Think-SFT-7B-ONNX",
+  qwenDtype: "q4f16",
   kokoroModel: "onnx-community/Kokoro-82M-v1.0-ONNX",
   kokoroDtype: "q8",
   kokoroVoice: "af_bella",

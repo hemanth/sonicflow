@@ -639,7 +639,7 @@ async function runNoteGeneration(record, options = {}) {
     toastOnError = true,
     successMessage = "Notes created",
     emptyMessage = "Add context or transcript before generating notes",
-    busyMessage = "Preparing Qwen",
+    busyMessage = "Preparing OLMo",
   } = options;
 
   if (!record) {
@@ -687,7 +687,7 @@ async function runNoteGeneration(record, options = {}) {
     );
 
     if (!response?.text) {
-      throw new Error("Qwen did not return note content");
+      throw new Error("OLMo did not return note content");
     }
 
     let finalNotes = sanitizeGeneratedNotes(response.text, record.type);
@@ -779,7 +779,7 @@ async function runNotesRewrite(record, presetKey, options = {}) {
     );
 
     if (!response?.text) {
-      throw new Error("Qwen did not return refined notes");
+      throw new Error("OLMo did not return refined notes");
     }
 
     let finalNotes = sanitizeGeneratedNotes(response.text, record.type);

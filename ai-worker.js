@@ -2,7 +2,7 @@ import {
   env,
   pipeline,
   TextStreamer,
-} from "https://esm.sh/@huggingface/transformers@3.8.1";
+} from "https://esm.sh/@huggingface/transformers@4.0.0";
 import { KokoroTTS } from "https://esm.sh/kokoro-js@1.2.1";
 
 env.allowLocalModels = false;
@@ -11,8 +11,8 @@ env.useBrowserCache = true;
 const DEFAULT_SETTINGS = {
   whisperModel: "Xenova/whisper-tiny.en",
   whisperLanguage: "en",
-  qwenModel: "onnx-community/Qwen2.5-0.5B-Instruct",
-  qwenDtype: "q4",
+  qwenModel: "onnx-community/Olmo-Hybrid-Think-SFT-7B-ONNX",
+  qwenDtype: "q4f16",
   kokoroModel: "onnx-community/Kokoro-82M-v1.0-ONNX",
   kokoroDtype: "q8",
   kokoroVoice: "af_bella",
@@ -50,7 +50,7 @@ async function handleMessage(message) {
     runtime.tts = null;
     runtime.keys = { stt: "", llm: "", tts: "" };
     self.postMessage({ type: "status", stage: "stt", text: "Whisper ready to load" });
-    self.postMessage({ type: "status", stage: "llm", text: "Qwen ready to load" });
+    self.postMessage({ type: "status", stage: "llm", text: "OLMo ready to load" });
     self.postMessage({ type: "status", stage: "tts", text: "Kokoro ready to load" });
     return;
   }
@@ -108,7 +108,7 @@ async function transcribeAudio(requestId, { audio, language }) {
 
 async function generateNotes(requestId, { messages, maxNewTokens }) {
   const generator = await getGenerator();
-  self.postMessage({ type: "status", stage: "llm", text: "Running Qwen" });
+  self.postMessage({ type: "status", stage: "llm", text: "Running OLMo" });
   const streamedText = { value: "" };
   const prompt = buildPrompt(messages);
   const result = await generator(prompt, {
@@ -183,8 +183,8 @@ async function getGenerator() {
     runtime.settings.qwenModel,
     {
       device: chooseDevice("llm"),
-      dtype: runtime.settings.qwenDtype || "q4",
-      progress_callback: createProgressReporter("llm", "Loading Qwen"),
+      dtype: runtime.settings.qwenDtype || "q4f16",
+      progress_callback: createProgressReporter("llm", "Loading OLMo"),
     },
     "llm",
   );
