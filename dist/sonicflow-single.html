@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#050505" />
+    <meta
+      name="description"
+      content="Installable meeting notes workspace with recording, transcription, note drafting, and voice note capture."
+    />
+    <style>:root{color-scheme:dark;--bg: #050505;--surface: #0b0b0b;--surface-soft: #101010;--surface-strong: #141414;--surface-float: rgba(255, 255, 255, .02);--text: #ffffff;--text-muted: rgba(255, 255, 255, .58);--border: rgba(255, 255, 255, .1);--border-strong: rgba(255, 255, 255, .18);--red: #ff4d4d;--red-soft: rgba(255, 77, 77, .14);--red-strong: rgba(255, 77, 77, .82);--radius-lg: 24px;--radius-md: 18px;--radius-sm: 12px;--content: 1180px;--font-sans: "Geist", "SF Pro Display", "Segoe UI", sans-serif;--ease: cubic-bezier(.22, 1, .36, 1)}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:var(--font-sans)}body{min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer}body{overflow-x:hidden}button:disabled{opacity:.42;cursor:not-allowed}[hidden]{display:none!important}.eyebrow,.section-label,.landing-kicker{margin:0;color:var(--text-muted);text-transform:uppercase;letter-spacing:.12em;font-size:.68rem}.landing-shell,.recorder-shell,.voice-shell,.library-shell,.app-shell{width:min(calc(100% - 32px),var(--content));margin:0 auto}.landing-shell{min-height:100vh;display:grid;align-content:center;gap:28px;padding:32px 0}.landing-copy{max-width:640px}.landing-copy h1,.recorder-card h1,.brand-line h1{margin:0;font-weight:500;letter-spacing:-.06em;line-height:.96}.landing-copy h1{margin-top:14px;font-size:clamp(2.6rem,6vw,5.8rem)}.landing-text,.recorder-copy,.dialog-note,.record-preview,.empty-state,.field span,.record-meta{color:var(--text-muted);line-height:1.55}.landing-text{margin:16px 0 0;max-width:42ch}.landing-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.landing-footer{display:flex;justify-content:flex-start}.landing-card,.panel,.recorder-card,.settings-card{border:1px solid var(--border);background:var(--surface)}.landing-card{display:grid;gap:12px;text-align:left;padding:24px;border-radius:var(--radius-lg);min-height:208px;color:var(--text)}.landing-card strong{font-size:1.35rem;font-weight:500;letter-spacing:-.04em}.landing-card p{margin:0;max-width:32ch;color:var(--text-muted)}.landing-card:hover,.record-card:hover,.primary-button:hover,.secondary-button:hover,.ghost-button:hover,.icon-button:hover,.filter-chip:hover,input:focus,select:focus,textarea:focus{border-color:var(--border-strong)}body[data-view=landing] .landing-shell,body[data-view=recorder] .recorder-card,body[data-view=voice] .voice-card,body[data-view=library] .library-card,body[data-view=workspace] .sidebar,body[data-view=workspace] .capture-panel,body[data-view=workspace] .notes-panel{animation:rise-in .42s var(--ease) both}.recorder-shell{min-height:100vh;display:grid;align-content:center;gap:18px;padding:24px 0}.voice-shell,.library-shell{min-height:100vh;padding:24px 0}.recorder-topbar,.voice-topbar,.topbar,.sidebar-header,.library-header,.panel-header,.dialog-header,.meta-row,.notes-actions,.voice-actions,.voice-meta,.topbar-actions,.dialog-actions,.filter-row,.recorder-topbar-actions,.recorder-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.recorder-topbar,.voice-topbar,.topbar,.sidebar-header,.library-header,.panel-header,.dialog-header{justify-content:space-between}.recorder-card{width:min(100%,720px);padding:32px;border-radius:32px}.voice-card,.library-card{border-radius:32px}.voice-card{width:min(100%,980px);padding:28px;background:radial-gradient(circle at top left,rgba(255,255,255,.045),transparent 26%),linear-gradient(180deg,#ffffff08,#ffffff03);border:1px solid var(--border)}.recorder-card h1{margin-top:14px;font-size:clamp(2.2rem,5vw,4.8rem);max-width:10ch}.voice-card h1{margin:12px 0 18px;font-weight:500;font-size:clamp(2.2rem,4vw,4rem);letter-spacing:-.05em;max-width:10ch}.recorder-copy{margin:14px 0 0;max-width:42ch}.recorder-title-field{margin-top:24px}.recorder-status,.panel-status,.pill{display:inline-flex;align-items:center;min-height:32px;padding:0 10px;border-radius:999px;border:1px solid var(--border);color:var(--text-muted);background:var(--surface-soft);font-size:.76rem}.recorder-actions{margin-top:18px}.voice-actions,.voice-meta{margin-top:16px}.voice-actions{display:grid;grid-template-columns:repeat(4,minmax(0,max-content));justify-content:start;gap:10px;padding:14px 0 18px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}.voice-meta{gap:8px}.recorder-primary{min-width:148px}.voice-grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:18px;margin-top:22px}.voice-grid .field{gap:10px;padding:18px;border-radius:20px;border:1px solid var(--border);background:#ffffff05}#voiceTranscriptInput,#voiceSummaryInput{min-height:420px}audio{width:100%;margin-top:16px;filter:grayscale(1)}.app-shell{padding:20px 0 28px}.library-card{padding:18px}.library-search,.library-list{margin-top:14px}.topbar{margin-bottom:18px}.brand-block{max-width:520px}.brand-line h1{margin-top:10px;font-size:clamp(1.7rem,4vw,3.25rem);max-width:12ch}.topbar-actions{justify-content:flex-end}.primary-button,.secondary-button,.ghost-button,.icon-button,.filter-chip{min-height:36px;display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius-sm);border:1px solid var(--border);background:transparent;color:var(--text);padding:0 12px;font-size:.84rem;transition:transform .18s var(--ease),border-color .18s var(--ease),background-color .18s var(--ease),color .18s var(--ease),opacity .18s var(--ease)}.primary-button{background:#fff;border-color:#fff;color:#0b0b0b}.primary-button:hover,.secondary-button:hover,.ghost-button:hover,.icon-button:hover,.filter-chip:hover{transform:translateY(-1px)}.record-button,.stop-button{position:relative;padding-left:16px}.record-button:before,.stop-button:before{content:"";width:8px;height:8px;border-radius:999px;margin-right:8px;background:currentColor;display:inline-block;flex:none}.record-button{background:var(--red-soft);border-color:#ff67678f;color:#fff4f4}.record-button:hover{background:#ff4d4d33;border-color:#ff6767cc}.stop-button{border-color:#ff67676b;color:#ffdede}.stop-button:not(:disabled){background:#ff4d4d38;border-color:var(--red-strong)}body.is-recording .stop-button:not(:disabled){animation:record-pulse 1.2s ease-in-out infinite}.icon-button{min-width:36px}.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px;align-items:start}.sidebar,.capture-panel,.notes-panel{border-radius:var(--radius-lg)}.sidebar{padding:4px 4px 0 0;display:flex;flex-direction:column;gap:14px;min-height:calc(100vh - 112px);background:transparent;border:none;position:sticky;top:20px}.sidebar-header h2,.panel-header h3,.dialog-header h2{margin:6px 0 0;font-weight:500;font-size:1rem;letter-spacing:-.03em}.record-list{display:flex;flex-direction:column;gap:8px;min-height:0;overflow:auto;padding-right:4px}.record-card{width:100%;text-align:left;border-radius:14px;border:1px solid transparent;background:transparent;padding:12px;color:var(--text)}.record-card.active{border-color:var(--border-strong);background:var(--surface-soft)}.record-title{margin:4px 0 0;font-size:.95rem;letter-spacing:-.02em}.record-preview{margin-top:8px;font-size:.9rem}.workspace,.editor-grid{display:grid;gap:24px}.editor-grid{grid-template-columns:minmax(320px,.78fr) minmax(0,1.22fr)}.capture-panel,.notes-panel{padding:24px;background:linear-gradient(180deg,#ffffff06,#ffffff03)}.field-grid{display:grid;grid-template-columns:minmax(0,1fr) 140px;gap:12px}.field{display:grid;gap:8px}.field-panel{align-content:start}.field-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.panel-toolbar{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}.field span{font-size:.8rem}.tiny-tabs{display:inline-flex;align-items:center;gap:4px;padding:3px;border:1px solid var(--border);border-radius:999px;background:#ffffff05}.tab-button{min-height:28px;border:none;border-radius:999px;background:transparent;color:var(--text-muted);padding:0 10px;font-size:.76rem}.tab-button.active{background:#fff;color:#0b0b0b}.rewrite-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.toolbar-select{width:auto;min-width:168px;padding-right:32px}input,select,textarea{width:100%;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface-soft);color:var(--text);padding:11px 12px;outline:none}textarea{min-height:120px;resize:vertical;line-height:1.58}.markdown-preview{border:1px solid var(--border);border-radius:var(--radius-sm);background:#ffffff05;padding:16px;min-height:120px}.markdown-pane textarea,.markdown-pane .markdown-preview{min-height:420px}.markdown-preview>:first-child{margin-top:0}.markdown-preview>:last-child{margin-bottom:0}.markdown-preview h1,.markdown-preview h2,.markdown-preview h3{margin:0 0 12px;font-weight:500;letter-spacing:-.03em}.markdown-preview h1{font-size:1.1rem}.markdown-preview h2{font-size:1rem}.markdown-preview h3{font-size:.94rem}.markdown-preview p,.markdown-preview ul,.markdown-preview ol{margin:0 0 12px;color:var(--text);line-height:1.65}.markdown-preview ul,.markdown-preview ol{padding-left:18px}.markdown-preview li+li{margin-top:6px}.markdown-preview code{border:1px solid var(--border);border-radius:8px;padding:0 6px;background:#ffffff0a;font-size:.92em}.markdown-empty{color:var(--text-muted)}.notes-actions,.meta-row{margin:16px 0 0}.meta-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:18px}.capture-panel #manualNotesInput{min-height:160px}.capture-panel #transcriptInput{min-height:300px}.notes-panel{position:sticky;top:20px}.notes-panel #meetingNotesInput{min-height:560px}.notes-actions{position:sticky;top:-4px;z-index:2;padding:12px 0 14px;background:linear-gradient(180deg,#0b0b0b 0%,rgba(11,11,11,.88) 70%,transparent 100%)}.filter-chip.active{background:#fff;color:#0b0b0b;border-color:#fff}.settings-dialog{width:min(860px,calc(100vw - 32px));border:none;padding:0;background:transparent}.settings-dialog::backdrop{background:#000c}.settings-card{width:100%;padding:20px;border-radius:26px}.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}.dialog-note{margin:16px 0 0;font-size:.92rem}.toast{position:fixed;left:50%;bottom:20px;transform:translate(-50%,16px);opacity:0;pointer-events:none;border:1px solid var(--border-strong);border-radius:999px;background:#111;color:#fff;padding:11px 16px;transition:opacity .14s ease,transform .14s ease}.toast.visible{opacity:1;transform:translate(-50%)}.empty-state{padding:14px;border-radius:14px;border:1px dashed var(--border)}@keyframes rise-in{0%{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}@keyframes record-pulse{0%,to{box-shadow:0 0 #ff4d4d52}50%{box-shadow:0 0 0 8px #ff4d4d00}}@media(max-width:1080px){.layout,.editor-grid,.field-grid,.voice-grid,.settings-grid,.landing-grid{grid-template-columns:1fr}.sidebar{min-height:0;position:static;padding-right:0}.notes-panel{position:static}.voice-actions{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:720px){.landing-shell,.recorder-shell,.voice-shell,.library-shell,.app-shell{width:min(calc(100% - 20px),var(--content))}.landing-shell{align-content:start;padding-top:28px}.landing-card,.recorder-card,.voice-card,.library-card,.sidebar,.capture-panel,.notes-panel,.settings-card{padding:16px}.topbar,.recorder-topbar,.voice-topbar{align-items:flex-start;flex-direction:column}.topbar-actions{justify-content:flex-start}.voice-actions{grid-template-columns:1fr}.field-head{align-items:flex-start;flex-direction:column}.panel-toolbar{width:100%;justify-content:flex-start}.recorder-card h1,.brand-line h1,.landing-copy h1{max-width:100%}.meta-row{grid-template-columns:1fr}}@media(max-width:560px){.notes-actions,.voice-actions,.recorder-actions,.topbar-actions,.recorder-topbar-actions,.filter-row,.dialog-actions,.rewrite-toolbar,.panel-toolbar{gap:8px}.primary-button,.secondary-button,.ghost-button,.icon-button,.filter-chip,.toolbar-select{width:100%;justify-content:center}.tiny-tabs{width:100%}.tab-button{flex:1 1 0}.record-card{padding:11px}}
+</style>
+    <title>Sonicflow Notes</title>
+  </head>
+  <body>
+    <main id="appMain">
+    <section class="landing-shell" id="landingShell">
+      <div class="landing-copy">
+        <p class="eyebrow">Sonicflow</p>
+        <h1>What do you want to capture?</h1>
+        <p class="landing-text">
+          Pick a starting flow and the workspace will adapt around it.
+        </p>
+      </div>
+
+      <div class="landing-grid">
+        <button class="landing-card" id="startMeetingCard" type="button">
+          <span class="landing-kicker">Meeting</span>
+          <strong>Record a meeting</strong>
+          <p>Capture discussion, transcribe it, then turn it into decisions and action items.</p>
+        </button>
+
+        <button class="landing-card" id="startVoiceNoteCard" type="button">
+          <span class="landing-kicker">Voice note</span>
+          <strong>Record a voice note</strong>
+          <p>Capture a quick thought, summary, or update and turn it into a clean note.</p>
+        </button>
+      </div>
+
+      <div class="landing-footer">
+        <button class="ghost-button" id="openLibraryButton" type="button">Browse all recordings</button>
+      </div>
+    </section>
+
+    <section class="recorder-shell" id="recorderShell" hidden>
+      <div class="recorder-topbar">
+        <div class="recorder-topbar-actions">
+          <button class="ghost-button" id="recorderBackButton" type="button">Back</button>
+          <button class="ghost-button" id="recorderLibraryButton" type="button">Recordings</button>
+        </div>
+        <button class="ghost-button" id="recorderModelsButton" type="button">Models</button>
+      </div>
+
+      <div class="recorder-card">
+        <p class="eyebrow" id="recorderEyebrow">Meeting</p>
+        <h1 id="recorderHeading">Record the meeting first.</h1>
+        <p class="recorder-copy">
+          Keep this step focused. Capture the room, then continue into notes when you are ready.
+        </p>
+
+        <label class="field recorder-title-field">
+          <span>Title</span>
+          <input id="recorderTitleInput" type="text" placeholder="Board sync, sprint review, interview loop..." />
+        </label>
+
+        <div class="recorder-status" id="recorderStatus">Recorder idle</div>
+
+        <div class="recorder-actions">
+          <button class="primary-button recorder-primary record-button" id="recorderStartButton" type="button">Record meeting</button>
+          <button class="ghost-button stop-button" id="recorderStopButton" type="button" disabled>Stop</button>
+          <button class="ghost-button" id="recorderContinueButton" type="button" disabled>Continue to notes</button>
+        </div>
+
+        <audio id="recorderAudioPlayer" controls preload="metadata" hidden></audio>
+      </div>
+    </section>
+
+    <section class="voice-shell" id="voiceShell" hidden>
+      <div class="voice-topbar">
+        <div class="recorder-topbar-actions">
+          <button class="ghost-button" id="voiceBackButton" type="button">Back</button>
+          <button class="ghost-button" id="voiceLibraryButton" type="button">Recordings</button>
+        </div>
+        <button class="ghost-button" id="voiceModelsButton" type="button">Models</button>
+      </div>
+
+      <div class="voice-card">
+        <p class="eyebrow">Voice note</p>
+        <h1 id="voiceHeading">Capture a quick note.</h1>
+        <label class="field">
+          <span>Title</span>
+          <input id="voiceTitleInput" type="text" placeholder="Follow-up, idea, reminder..." />
+        </label>
+
+        <div class="voice-actions">
+          <button class="primary-button record-button" id="voiceStartButton" type="button">Record note</button>
+          <button class="ghost-button stop-button" id="voiceStopButton" type="button" disabled>Stop</button>
+          <button class="ghost-button" id="voiceTranscribeButton" type="button">Transcribe</button>
+          <button class="ghost-button" id="voiceGenerateButton" type="button">Summarize</button>
+          <button class="ghost-button" id="voiceSpeakButton" type="button">Play audio</button>
+          <button class="ghost-button" id="voiceSaveButton" type="button">Save</button>
+          <button class="ghost-button danger-button" id="voiceDeleteButton" type="button">Delete</button>
+        </div>
+
+        <div class="voice-meta">
+          <span class="panel-status" id="voiceRecordingStatus">Recorder idle</span>
+          <span class="panel-status" id="voiceAiStatus">Summary idle</span>
+          <span class="panel-status" id="voiceSavedMetric">Draft</span>
+        </div>
+
+        <audio id="voiceAudioPlayer" controls preload="metadata" hidden></audio>
+
+        <div class="voice-grid">
+          <label class="field">
+            <span>Transcript</span>
+            <textarea id="voiceTranscriptInput" rows="10" placeholder="Transcript appears here."></textarea>
+          </label>
+
+          <div class="field field-panel">
+            <div class="field-head">
+              <span>Summary</span>
+              <div class="panel-toolbar">
+                <div class="tiny-tabs" role="tablist" aria-label="Voice summary view">
+                  <button class="tab-button active" id="voicePreviewTab" type="button" role="tab" aria-selected="true" aria-controls="voicePreviewPane" tabindex="0">Preview</button>
+                  <button class="tab-button" id="voiceRawTab" type="button" role="tab" aria-selected="false" aria-controls="voiceRawPane" tabindex="-1">Raw md</button>
+                </div>
+                <div class="rewrite-toolbar">
+                  <select id="voiceRewriteSelect" class="toolbar-select" aria-label="Voice note rewrite option">
+                    <option value="grammar">Fix grammar</option>
+                    <option value="professional">Make professional</option>
+                    <option value="concise">Tighten writing</option>
+                    <option value="executive">Executive summary</option>
+                  </select>
+                  <button class="ghost-button" id="voiceRewriteButton" type="button">Refine</button>
+                  <button class="ghost-button" id="voiceCopyButton" type="button">Copy</button>
+                </div>
+              </div>
+            </div>
+            <div class="markdown-pane" id="voicePreviewPane" role="tabpanel" aria-labelledby="voicePreviewTab">
+              <div class="markdown-preview" id="voiceSummaryPreview" aria-live="polite"></div>
+            </div>
+            <div class="markdown-pane" id="voiceRawPane" role="tabpanel" aria-labelledby="voiceRawTab" hidden>
+              <textarea id="voiceSummaryInput" rows="10" placeholder="Summary appears here."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="library-shell" id="libraryShell" hidden>
+      <header class="topbar">
+        <div class="brand-block">
+          <p class="eyebrow">Sonicflow</p>
+          <div class="brand-line">
+            <h1>All recordings.</h1>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="ghost-button" id="libraryHomeButton" type="button">Home</button>
+          <button class="ghost-button" id="libraryModelsButton" type="button">Models</button>
+          <button class="primary-button" id="libraryMeetingButton" type="button">New meeting</button>
+          <button class="secondary-button" id="libraryVoiceButton" type="button">New voice note</button>
+        </div>
+      </header>
+
+      <div class="library-card panel">
+        <div class="library-header">
+          <span class="pill" id="libraryRecordCount">0 items</span>
+        </div>
+        <label class="field library-search">
+          <span>Search recordings</span>
+          <input id="librarySearchInput" type="search" placeholder="Search titles, transcripts, summaries" />
+        </label>
+        <div class="record-list library-list" id="libraryRecordList" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <div class="app-shell" id="appShell" hidden>
+      <header class="topbar">
+        <div class="brand-block">
+          <p class="eyebrow">Sonicflow</p>
+          <div class="brand-line">
+            <h1 id="workspaceHeading">Meeting notes workspace.</h1>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="ghost-button" id="homeButton" type="button">Home</button>
+          <button class="ghost-button" id="workspaceLibraryButton" type="button">Recordings</button>
+          <button class="ghost-button" id="installButton" type="button" hidden>Install app</button>
+          <button class="ghost-button" id="settingsButton" type="button">Models</button>
+          <button class="primary-button" id="newMeetingButton" type="button">New meeting</button>
+          <button class="secondary-button" id="newVoiceNoteButton" type="button">New voice note</button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <aside class="sidebar panel">
+          <div class="sidebar-header">
+            <div>
+              <p class="section-label">Library</p>
+              <h2>Recent captures</h2>
+            </div>
+            <span class="pill" id="recordCount">0 items</span>
+          </div>
+
+          <label class="field">
+            <span>Search</span>
+            <input id="searchInput" type="search" placeholder="Search titles, transcripts, notes" />
+          </label>
+
+          <div class="filter-row" role="tablist" aria-label="Record filters">
+            <button class="filter-chip active" data-filter="all" type="button">All</button>
+            <button class="filter-chip" data-filter="meeting" type="button">Meetings</button>
+            <button class="filter-chip" data-filter="voice-note" type="button">Voice notes</button>
+          </div>
+
+          <div class="record-list" id="recordList" aria-live="polite"></div>
+        </aside>
+
+        <section class="workspace">
+          <section class="editor-grid">
+            <article class="panel capture-panel">
+              <div class="panel-header">
+                <div>
+                  <p class="section-label">Note</p>
+                  <h3 id="editorHeading">Untitled meeting</h3>
+                </div>
+                <span class="panel-status" id="modeMetric">Meeting</span>
+              </div>
+
+              <div class="field-grid">
+                <label class="field">
+                  <span>Title</span>
+                  <input id="titleInput" type="text" placeholder="Board sync, sprint review, interview loop..." />
+                </label>
+
+                <label class="field">
+                  <span>Type</span>
+                  <select id="typeSelect">
+                    <option value="meeting">Meeting</option>
+                    <option value="voice-note">Voice note</option>
+                  </select>
+                </label>
+              </div>
+
+              <label class="field">
+                <span id="manualNotesLabel">Context and manual notes</span>
+                <textarea
+                  id="manualNotesInput"
+                  rows="7"
+                  placeholder="Agenda, participants, follow-up items, or raw note fragments."
+                ></textarea>
+                </label>
+
+              <div class="meta-row">
+                <span class="panel-status" id="recordingStatus">Recorder idle</span>
+                <span class="panel-status" id="transcriptMetric">0 words</span>
+                <span class="panel-status" id="savedMetric">Draft</span>
+                <span class="panel-status" id="runtimeMetric">Browser local</span>
+              </div>
+
+              <audio id="audioPlayer" controls preload="metadata" hidden></audio>
+
+              <label class="field">
+                <span>Transcript</span>
+                <textarea
+                  id="transcriptInput"
+                  rows="10"
+                  placeholder="Transcript appears here after transcription. You can edit it before generating final notes."
+                ></textarea>
+              </label>
+            </article>
+
+            <article class="panel notes-panel">
+              <div class="panel-header">
+                <div>
+                  <p class="section-label">Compose</p>
+                  <h3 id="composeHeading">Structured notes</h3>
+                </div>
+                <span class="panel-status" id="llmStatus">Notes generator idle</span>
+              </div>
+
+              <div class="notes-actions">
+                <button class="ghost-button" id="transcribeButton" type="button">Transcribe</button>
+                <button class="ghost-button" id="saveButton" type="button">Save</button>
+                <button class="primary-button" id="generateButton" type="button">Create meeting notes</button>
+                <button class="ghost-button" id="speakButton" type="button">Play audio</button>
+                <button class="ghost-button danger-button" id="deleteButton" type="button">Delete</button>
+              </div>
+
+              <label class="field">
+                <div class="field-head">
+                  <span>Final notes</span>
+                  <div class="panel-toolbar">
+                    <div class="tiny-tabs" role="tablist" aria-label="Meeting notes view">
+                      <button class="tab-button active" id="notesPreviewTab" type="button" role="tab" aria-selected="true" aria-controls="notesPreviewPane" tabindex="0">Preview</button>
+                      <button class="tab-button" id="notesRawTab" type="button" role="tab" aria-selected="false" aria-controls="notesRawPane" tabindex="-1">Raw md</button>
+                    </div>
+                    <div class="rewrite-toolbar">
+                      <select id="notesRewriteSelect" class="toolbar-select" aria-label="Notes rewrite option">
+                        <option value="grammar">Fix grammar</option>
+                        <option value="professional">Make professional</option>
+                        <option value="concise">Tighten writing</option>
+                        <option value="executive">Executive summary</option>
+                      </select>
+                      <button class="ghost-button" id="notesRewriteButton" type="button">Refine</button>
+                      <button class="ghost-button" id="notesCopyButton" type="button">Copy</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="markdown-pane" id="notesPreviewPane" role="tabpanel" aria-labelledby="notesPreviewTab">
+                  <div class="markdown-preview" id="meetingNotesPreview" aria-live="polite"></div>
+                </div>
+                <div class="markdown-pane" id="notesRawPane" role="tabpanel" aria-labelledby="notesRawTab" hidden>
+                  <textarea
+                    id="meetingNotesInput"
+                    rows="18"
+                    placeholder="Generated notes, action items, decisions, risks, and next steps."
+                  ></textarea>
+                </div>
+              </label>
+            </article>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="settings-dialog" id="settingsDialog">
+      <form method="dialog" class="settings-card">
+        <div class="dialog-header">
+          <div>
+            <p class="section-label">Models</p>
+            <h2>On-device AI runtime</h2>
+          </div>
+          <button class="icon-button" value="cancel" type="submit" aria-label="Close">Close</button>
+        </div>
+
+        <div class="settings-grid">
+          <label class="field">
+            <span>Whisper model</span>
+            <input id="sttEndpointInput" type="text" />
+          </label>
+          <label class="field">
+            <span>Whisper language</span>
+            <input id="sttModelInput" type="text" placeholder="en" />
+          </label>
+
+          <label class="field">
+            <span>Qwen model</span>
+            <input id="llmEndpointInput" type="text" />
+          </label>
+          <label class="field">
+            <span>Qwen dtype</span>
+            <input id="llmModelInput" type="text" placeholder="q4" />
+          </label>
+
+          <label class="field">
+            <span>Kokoro model</span>
+            <input id="ttsEndpointInput" type="text" />
+          </label>
+          <label class="field">
+            <span>Kokoro dtype</span>
+            <input id="ttsModelInput" type="text" placeholder="q8" />
+          </label>
+
+          <label class="field">
+            <span>Kokoro voice</span>
+            <input id="ttsVoiceInput" type="text" placeholder="af_bella" />
+          </label>
+        </div>
+
+        <p class="dialog-note">
+          First use downloads models into browser storage. Whisper is the lightest path here,
+          Kokoro is moderate, and Qwen is the heavy step. If your browser exposes GPU
+          acceleration, the app uses it. Otherwise it falls back to the browser runtime.
+        </p>
+
+        <div class="dialog-actions">
+          <button class="ghost-button" id="resetSettingsButton" type="button">Reset defaults</button>
+          <button class="primary-button" id="saveSettingsButton" type="button">Save models</button>
+        </div>
+      </form>
+    </dialog>
+
+    </main>
+
+    <div class="toast" id="toast" aria-live="polite"></div>
+
+    <script>window.__SONICFLOW_SINGLE_FILE__ = true;window.__SONICFLOW_INLINE_WORKER__ = "import{env as f,pipeline as d,TextStreamer as _}from\"https://esm.sh/@huggingface/transformers@3.8.1\";import{KokoroTTS as y}from\"https://esm.sh/kokoro-js@1.2.1\";f.allowLocalModels=!1,f.useBrowserCache=!0;const k={whisperModel:\"Xenova/whisper-tiny.en\",whisperLanguage:\"en\",qwenModel:\"onnx-community/Qwen2.5-0.5B-Instruct\",qwenDtype:\"q4\",kokoroModel:\"onnx-community/Kokoro-82M-v1.0-ONNX\",kokoroDtype:\"q8\",kokoroVoice:\"af_bella\"},s={settings:{...k},stt:null,llm:null,tts:null,keys:{stt:\"\",llm:\"\",tts:\"\"}};self.addEventListener(\"message\",t=>{b(t.data).catch(e=>{t.data?.id&&self.postMessage({type:\"error\",id:t.data.id,error:e.message||String(e)})})});async function b(t){if(t.type===\"configure\"){s.settings={...k,...t.payload?.settings||{}},s.stt=null,s.llm=null,s.tts=null,s.keys={stt:\"\",llm:\"\",tts:\"\"},self.postMessage({type:\"status\",stage:\"stt\",text:\"Whisper ready to load\"}),self.postMessage({type:\"status\",stage:\"llm\",text:\"Qwen ready to load\"}),self.postMessage({type:\"status\",stage:\"tts\",text:\"Kokoro ready to load\"});return}if(t.type===\"transcribe\"){const e=await v(t.id,t.payload||{});self.postMessage({type:\"result\",id:t.id,payload:e});return}if(t.type===\"generate\"){const e=await S(t.id,t.payload||{});self.postMessage({type:\"result\",id:t.id,payload:e});return}if(t.type===\"synthesize\"){const e=await D(t.id,t.payload||{});self.postMessage({type:\"result\",id:t.id,payload:e})}}async function v(t,{audio:e,language:n}){const o=await T();self.postMessage({type:\"status\",stage:\"stt\",text:\"Running Whisper\"});const r=new Float32Array(e),l=16e3*12,a=Math.max(1,Math.ceil(r.length/l));let i=\"\";for(let u=0;u<a;u+=1){const g=u*l,m=Math.min(r.length,g+l),M=r.slice(g,m),x=await K(o,M,n);i=`${i} ${x}`.trim(),self.postMessage({type:\"partial\",id:t,payload:{text:i,chunk:u+1,totalChunks:a}}),self.postMessage({type:\"status\",stage:\"stt\",text:`Transcribing audio ${u+1}/${a}`})}return{text:i}}async function S(t,{messages:e,maxNewTokens:n}){const o=await $();self.postMessage({type:\"status\",stage:\"llm\",text:\"Running Qwen\"});const r={value:\"\"},l=z(e),a=await o(l,{max_new_tokens:n||320,do_sample:!1,repetition_penalty:1.18,no_repeat_ngram_size:4,return_full_text:!1,streamer:L(o,t,r)}),i=Array.isArray(a)?a[0]:a;return{text:q(i)||r.value}}async function D(t,{text:e,voice:n}){const o=await A();self.postMessage({type:\"status\",stage:\"tts\",text:\"Streaming Kokoro\"});let r=0;for await(const l of o.stream(e,{voice:n||s.settings.kokoroVoice})){const a=await W(l),i=await a.arrayBuffer();r+=1,self.postMessage({type:\"partial\",id:t,payload:{audioBuffer:i,mimeType:a.type||\"audio/wav\",chunkCount:r}},[i])}return{ok:!0,requestId:t,chunkCount:r}}async function T(){const t=`${s.settings.whisperModel}`;return s.stt&&s.keys.stt===t||(s.stt=await w(\"automatic-speech-recognition\",s.settings.whisperModel,{device:p(\"stt\"),progress_callback:c(\"stt\",\"Loading Whisper\")},\"stt\"),E(s.stt,s.settings.whisperModel),s.keys.stt=t),s.stt}async function $(){const t=`${s.settings.qwenModel}:${s.settings.qwenDtype}`;return s.llm&&s.keys.llm===t||(s.llm=await w(\"text-generation\",s.settings.qwenModel,{device:p(\"llm\"),dtype:s.settings.qwenDtype||\"q4\",progress_callback:c(\"llm\",\"Loading Qwen\")},\"llm\"),s.keys.llm=t),s.llm}async function A(){const t=`${s.settings.kokoroModel}:${s.settings.kokoroDtype}`;if(s.tts&&s.keys.tts===t)return s.tts;const e=p(\"tts\");self.postMessage({type:\"status\",stage:\"tts\",text:\"Loading Kokoro\"});try{s.tts=await y.from_pretrained(s.settings.kokoroModel,{device:e,dtype:s.settings.kokoroDtype||\"q8\",progress_callback:c(\"tts\",\"Loading Kokoro\")})}catch(n){if(e===\"webgpu\")self.postMessage({type:\"status\",stage:\"tts\",text:\"Kokoro WebGPU failed, retrying with WASM\"}),s.tts=await y.from_pretrained(s.settings.kokoroModel,{device:\"wasm\",dtype:s.settings.kokoroDtype||\"q8\",progress_callback:c(\"tts\",\"Loading Kokoro\")});else throw n}return s.keys.tts=t,s.tts}async function w(t,e,n,o){try{return await d(t,e,n)}catch(r){if(n.device===\"webgpu\")return self.postMessage({type:\"status\",stage:o,text:\"WebGPU failed, retrying with WASM\"}),d(t,e,{...n,device:\"wasm\"});throw r}}function p(t){return t===\"tts\"?\"wasm\":\"gpu\"in navigator?\"webgpu\":\"wasm\"}function c(t,e){return n=>{const o=typeof n?.progress==\"number\"?n.progress:null,r=o==null?null:o<=1?o*100:o;self.postMessage({type:\"progress\",stage:t,text:e,progress:r})}}function L(t,e,n){return new _(t.tokenizer,{skip_prompt:!0,callback_function:o=>{n.value+=o,self.postMessage({type:\"partial\",id:e,payload:{text:n.value,delta:o}})}})}async function W(t){if(typeof t?.toBlob==\"function\")return t.toBlob();if(typeof t?.audio?.toBlob==\"function\")return t.audio.toBlob();throw new Error(\"Kokoro stream chunk did not expose audio data\")}function q(t){return t?typeof t.generated_text==\"string\"?t.generated_text:Array.isArray(t.generated_text)?t.generated_text.map(e=>typeof e==\"string\"?e:typeof e?.content==\"string\"?e.content:\"\").join(\"\").trim():\"\":\"\"}function h(t){return/\\.en($|[^a-z])/i.test(t||\"\")}function B(t){const e=t?.message||String(t);return e.includes(\"Cannot specify `task` or `language` for an English-only model\")||e.includes(\"English-only model\")}function E(t,e){if(!h(e))return;const n=t?.model?.generation_config||t?.model?.config?.generation_config||t?.processor?.generation_config;n&&(\"language\"in n&&(n.language=null),\"task\"in n&&(n.task=null),\"is_multilingual\"in n&&(n.is_multilingual=!1))}async function K(t,e,n){const o={chunk_length_s:12,stride_length_s:2,return_timestamps:!1},l=h(s.settings.whisperModel)?o:{...o,language:n||s.settings.whisperLanguage||void 0,task:\"transcribe\"};try{return(await t(e,l))?.text||\"\"}catch(a){if(!B(a))throw a;return(await t(e,o))?.text||\"\"}}function z(t){return t.map(e=>`${e.role===\"system\"?\"System\":e.role===\"assistant\"?\"Assistant\":\"User\"}:\n${e.content}`).join(`\n\n`).concat(`\n\nAssistant:\n`)}\n";</script><script type="module">var $="sonicflow-on-device-settings-v1",be="sonicflow-notes";var R="records",h={whisperModel:"Xenova/whisper-tiny.en",whisperLanguage:"en",qwenModel:"onnx-community/Qwen2.5-0.5B-Instruct",qwenDtype:"q4",kokoroModel:"onnx-community/Kokoro-82M-v1.0-ONNX",kokoroDtype:"q8",kokoroVoice:"af_bella"},I={landing:"/",meetings:"/meetings",notes:"/notes",recordings:"/recordings"},Se={meeting:{label:"Meeting",fallbackTitle:"Untitled meeting",generateLabel:"Create meeting notes",composeHeading:"Structured notes and playback",manualNotesLabel:"Context and manual notes",manualNotesPlaceholder:"Agenda, participants, follow-up items, or raw note fragments.",transcriptPlaceholder:"Transcript appears here after transcription. You can edit it before generating final notes.",notesPlaceholder:"Generated notes, action items, decisions, risks, and next steps."},"voice-note":{label:"Voice note",fallbackTitle:"Untitled voice note",generateLabel:"Create voice note summary",composeHeading:"Summary and playback",manualNotesLabel:"Context or prompt",manualNotesPlaceholder:"What is this note about? Add a quick sentence, tags, or a rough outline.",transcriptPlaceholder:"Live or recorded transcript appears here. Edit it before you create the final summary.",notesPlaceholder:"Clean summary, key points, and follow-up items for this voice note."}};function g(e){return Se[e]??Se.meeting}function T(e){return g(e).fallbackTitle}function ke(){try{return{...h,...JSON.parse(localStorage.getItem($)||"{}")}}catch{return{...h}}}async function oe(){return new Promise((e,n)=>{let r=indexedDB.open(be,1);r.addEventListener("upgradeneeded",()=>{let i=r.result;i.objectStoreNames.contains(R)||i.createObjectStore(R,{keyPath:"id"})}),r.addEventListener("success",()=>e(r.result)),r.addEventListener("error",()=>n(r.error))})}async function q(){let e=await oe();return new Promise((n,r)=>{let a=e.transaction(R,"readonly").objectStore(R).getAll();a.addEventListener("success",()=>{let s=a.result||[];n(s.sort((c,l)=>new Date(l.updatedAt)-new Date(c.updatedAt)))}),a.addEventListener("error",()=>r(a.error))})}async function E(e){let n=await oe();return new Promise((r,i)=>{let a=n.transaction(R,"readwrite");a.objectStore(R).put(structuredClone(e)),a.addEventListener("complete",r),a.addEventListener("error",()=>i(a.error))})}async function Re(e){let n=await oe();return new Promise((r,i)=>{let a=n.transaction(R,"readwrite");a.objectStore(R).delete(e),a.addEventListener("complete",r),a.addEventListener("error",()=>i(a.error))})}var o={settings:ke(),records:[],filter:"all",query:"",libraryQuery:"",activeId:null,mediaRecorder:null,chunks:[],isRecording:!1,audioUrl:null,deferredPrompt:null,ttsPlayback:{queue:[],currentAudio:null,activeRequestId:null,streamDone:!1,drainResolvers:[],cancelledRequestIds:new Set},activeTasks:{stt:!1,llm:!1,tts:!1},currentView:"landing"};var t={landingShell:document.querySelector("#landingShell"),recorderShell:document.querySelector("#recorderShell"),voiceShell:document.querySelector("#voiceShell"),libraryShell:document.querySelector("#libraryShell"),appShell:document.querySelector("#appShell"),startMeetingCard:document.querySelector("#startMeetingCard"),startVoiceNoteCard:document.querySelector("#startVoiceNoteCard"),openLibraryButton:document.querySelector("#openLibraryButton"),recorderBackButton:document.querySelector("#recorderBackButton"),recorderLibraryButton:document.querySelector("#recorderLibraryButton"),recorderModelsButton:document.querySelector("#recorderModelsButton"),recorderEyebrow:document.querySelector("#recorderEyebrow"),recorderHeading:document.querySelector("#recorderHeading"),recorderTitleInput:document.querySelector("#recorderTitleInput"),recorderStatus:document.querySelector("#recorderStatus"),recorderStartButton:document.querySelector("#recorderStartButton"),recorderStopButton:document.querySelector("#recorderStopButton"),recorderContinueButton:document.querySelector("#recorderContinueButton"),recorderAudioPlayer:document.querySelector("#recorderAudioPlayer"),voiceBackButton:document.querySelector("#voiceBackButton"),voiceLibraryButton:document.querySelector("#voiceLibraryButton"),voiceModelsButton:document.querySelector("#voiceModelsButton"),voiceHeading:document.querySelector("#voiceHeading"),voiceTitleInput:document.querySelector("#voiceTitleInput"),voiceStartButton:document.querySelector("#voiceStartButton"),voiceStopButton:document.querySelector("#voiceStopButton"),voiceTranscribeButton:document.querySelector("#voiceTranscribeButton"),voiceGenerateButton:document.querySelector("#voiceGenerateButton"),voiceSpeakButton:document.querySelector("#voiceSpeakButton"),voiceSaveButton:document.querySelector("#voiceSaveButton"),voiceDeleteButton:document.querySelector("#voiceDeleteButton"),voiceRecordingStatus:document.querySelector("#voiceRecordingStatus"),voiceAiStatus:document.querySelector("#voiceAiStatus"),voiceSavedMetric:document.querySelector("#voiceSavedMetric"),voiceAudioPlayer:document.querySelector("#voiceAudioPlayer"),voiceTranscriptInput:document.querySelector("#voiceTranscriptInput"),voiceSummaryInput:document.querySelector("#voiceSummaryInput"),voiceSummaryPreview:document.querySelector("#voiceSummaryPreview"),voicePreviewTab:document.querySelector("#voicePreviewTab"),voiceRawTab:document.querySelector("#voiceRawTab"),voicePreviewPane:document.querySelector("#voicePreviewPane"),voiceRawPane:document.querySelector("#voiceRawPane"),voiceRewriteSelect:document.querySelector("#voiceRewriteSelect"),voiceRewriteButton:document.querySelector("#voiceRewriteButton"),voiceCopyButton:document.querySelector("#voiceCopyButton"),installButton:document.querySelector("#installButton"),settingsButton:document.querySelector("#settingsButton"),homeButton:document.querySelector("#homeButton"),workspaceLibraryButton:document.querySelector("#workspaceLibraryButton"),newMeetingButton:document.querySelector("#newMeetingButton"),newVoiceNoteButton:document.querySelector("#newVoiceNoteButton"),libraryHomeButton:document.querySelector("#libraryHomeButton"),libraryModelsButton:document.querySelector("#libraryModelsButton"),libraryMeetingButton:document.querySelector("#libraryMeetingButton"),libraryVoiceButton:document.querySelector("#libraryVoiceButton"),recordCount:document.querySelector("#recordCount"),searchInput:document.querySelector("#searchInput"),recordList:document.querySelector("#recordList"),librarySearchInput:document.querySelector("#librarySearchInput"),libraryRecordCount:document.querySelector("#libraryRecordCount"),libraryRecordList:document.querySelector("#libraryRecordList"),workspaceHeading:document.querySelector("#workspaceHeading"),editorHeading:document.querySelector("#editorHeading"),modeMetric:document.querySelector("#modeMetric"),transcriptMetric:document.querySelector("#transcriptMetric"),savedMetric:document.querySelector("#savedMetric"),runtimeMetric:document.querySelector("#runtimeMetric"),titleInput:document.querySelector("#titleInput"),typeSelect:document.querySelector("#typeSelect"),manualNotesInput:document.querySelector("#manualNotesInput"),transcriptInput:document.querySelector("#transcriptInput"),meetingNotesInput:document.querySelector("#meetingNotesInput"),meetingNotesPreview:document.querySelector("#meetingNotesPreview"),notesPreviewTab:document.querySelector("#notesPreviewTab"),notesRawTab:document.querySelector("#notesRawTab"),notesPreviewPane:document.querySelector("#notesPreviewPane"),notesRawPane:document.querySelector("#notesRawPane"),transcribeButton:document.querySelector("#transcribeButton"),generateButton:document.querySelector("#generateButton"),notesRewriteSelect:document.querySelector("#notesRewriteSelect"),notesRewriteButton:document.querySelector("#notesRewriteButton"),notesCopyButton:document.querySelector("#notesCopyButton"),speakButton:document.querySelector("#speakButton"),saveButton:document.querySelector("#saveButton"),deleteButton:document.querySelector("#deleteButton"),audioPlayer:document.querySelector("#audioPlayer"),composeHeading:document.querySelector("#composeHeading"),manualNotesLabel:document.querySelector("#manualNotesLabel"),recordingStatus:document.querySelector("#recordingStatus"),llmStatus:document.querySelector("#llmStatus"),settingsDialog:document.querySelector("#settingsDialog"),sttEndpointInput:document.querySelector("#sttEndpointInput"),sttModelInput:document.querySelector("#sttModelInput"),llmEndpointInput:document.querySelector("#llmEndpointInput"),llmModelInput:document.querySelector("#llmModelInput"),ttsEndpointInput:document.querySelector("#ttsEndpointInput"),ttsModelInput:document.querySelector("#ttsModelInput"),ttsVoiceInput:document.querySelector("#ttsVoiceInput"),saveSettingsButton:document.querySelector("#saveSettingsButton"),resetSettingsButton:document.querySelector("#resetSettingsButton"),toast:document.querySelector("#toast")};function Ie({getSettings:e,onStatus:n,onError:r}){let i=null,a=null,s=0,c=new Map;function l(){if(i)return i;let v=window.__SONICFLOW_INLINE_WORKER__;return typeof v=="string"&&v.trim()?(a=URL.createObjectURL(new Blob([v],{type:"text/javascript"})),i=new Worker(a,{type:"module"})):i=new Worker("/ai-worker.js?v=5",{type:"module"}),i.addEventListener("message",m),i.addEventListener("error",p=>{r(p)}),i.postMessage({type:"configure",payload:{settings:e()}}),i}function d(){let v=()=>l();if("requestIdleCallback"in window){window.requestIdleCallback(v,{timeout:1200});return}window.setTimeout(v,400)}function m(v){let p=v.data||{};if(p.type==="status"){n(p.stage,p.text);return}if(p.type==="progress"){let L=typeof p.progress=="number"?` ${Math.round(p.progress)}%`:"";n(p.stage,`${p.text||"Downloading model"}${L}`);return}let k=c.get(p.id);if(k){if(p.type==="partial"){k.onPartial?.(p.payload,p);return}if(c.delete(p.id),p.type==="result"){k.resolve(p.payload);return}p.type==="error"&&k.reject(new Error(p.error||"AI task failed"))}}function w(v,p,k={}){let L=++s,we=[];p?.audio instanceof ArrayBuffer&&we.push(p.audio);let he=new Promise((tt,nt)=>{c.set(L,{resolve:tt,reject:nt,...k}),l().postMessage({id:L,type:v,payload:p},we)});return he.requestId=L,he}function y(){i&&i.postMessage({type:"configure",payload:{settings:e()}})}return{call:w,ensureWorker:l,reconfigure:y,scheduleWarmup:d}}function Be(e,n){return e.length<=n?e:`${e.slice(0,n).trim()}...`}function Le(e){return e.trim()?e.trim().split(/\s+/).length:0}function A(e){return new Intl.DateTimeFormat(void 0,{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}).format(new Date(e))}function C(e){return e.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;")}function Te(){return["audio/webm;codecs=opus","audio/mp4","audio/webm"].find(n=>MediaRecorder.isTypeSupported(n))||""}function K(e){return!e||e==="/"?"/":e.endsWith("/")?e.slice(0,-1)||"/":e}async function qe(){if(!navigator.storage?.persist)return!1;try{return navigator.storage.persist()}catch{return!1}}function ot(e){return`${e.title} ${e.manualNotes} ${e.transcript} ${e.meetingNotes}`.toLowerCase().trim()}function ie(e,{query:n="",filter:r="all"}={}){return[...e].filter(i=>r==="all"||i.type===r).filter(i=>!n||ot(i).includes(n)).sort((i,a)=>new Date(a.updatedAt)-new Date(i.updatedAt))}function ae(e){return`${e} item${e===1?"":"s"}`}function se(e,{activeId:n=null,previewLength:r=120,dataAttribute:i="data-record-id"}={}){return e.map(a=>{let s=a.meetingNotes||a.transcript||a.manualNotes||"No content yet";return`
+        <button type="button" class="record-card${a.id===n?" active":""}" ${i}="${a.id}">
+          <div class="record-meta">${g(a.type).label} \xB7 ${A(a.updatedAt)}</div>
+          <p class="record-title">${C(a.title)}</p>
+          <div class="record-preview">${C(Be(s,r))}</div>
+        </button>
+      `}).join("")}async function Ne(e,n){let r=await e.arrayBuffer(),i=new AudioContext;try{let a=await i.decodeAudioData(r.slice(0)),s=it(a);if(a.sampleRate===n)return s.slice();let c=Math.ceil(s.length*n/a.sampleRate),l=new OfflineAudioContext(1,c,n),d=l.createBuffer(1,s.length,a.sampleRate);d.copyToChannel(s,0);let m=l.createBufferSource();return m.buffer=d,m.connect(l.destination),m.start(0),(await l.startRendering()).getChannelData(0).slice()}finally{await i.close()}}function it(e){let n=e.numberOfChannels,r=e.length,i=new Float32Array(r);for(let a=0;a<n;a+=1){let s=e.getChannelData(a);for(let c=0;c<r;c+=1)i[c]+=s[c]/n}return i}function ce(e){let n=C(e);return n=n.replace(/`([^`]+)`/g,"<code>$1</code>"),n=n.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>"),n=n.replace(/\*([^*]+)\*/g,"<em>$1</em>"),n}function ue(e,n="Nothing to preview yet."){let r=String(e||"").replace(/\r/g,"").trim();if(!r)return`<p class="markdown-empty">${C(n)}</p>`;let i=r.split(`
+`),a=[],s=null,c=[],l=[],d=()=>{l.length&&(a.push(`<p>${ce(l.join(" "))}</p>`),l=[])},m=()=>{if(!c.length||!s)return;let w=c.map(y=>`<li>${ce(y)}</li>`).join("");a.push(`<${s}>${w}</${s}>`),s=null,c=[]};for(let w of i){let y=w.trim();if(!y){d(),m();continue}let v=y.match(/^(#{1,6})\s+(.+)$/);if(v){d(),m();let L=Math.min(v[1].length,3);a.push(`<h${L}>${ce(v[2].trim())}</h${L}>`);continue}let p=y.match(/^[-*]\s+(.+)$/);if(p){d(),s!=="ul"&&(m(),s="ul"),c.push(p[1].trim());continue}let k=y.match(/^\d+\.\s+(.+)$/);if(k){d(),s!=="ol"&&(m(),s="ol"),c.push(k[1].trim());continue}m(),l.push(y)}return d(),m(),a.join("")}var V={grammar:{label:"Fix grammar",busyLabel:"Fixing grammar",instruction:"Fix grammar, spelling, punctuation, and awkward phrasing. Keep the same meaning and structure."},professional:{label:"Make professional",busyLabel:"Polishing notes",instruction:"Rewrite in a polished professional tone suitable for sharing with colleagues or stakeholders. Keep the content factual and direct."},concise:{label:"Tighten writing",busyLabel:"Tightening notes",instruction:"Make the writing tighter and clearer. Remove filler, repetition, and weak phrasing without losing meaning."},executive:{label:"Executive summary",busyLabel:"Creating executive summary",instruction:"Rewrite for an executive audience. Lead with the outcome, key decision points, material risks, and immediate next steps. Keep it compact and high signal."}};function Me(e){return[{role:"system",content:e.type==="meeting"?["You are an exacting meeting-notes editor.","Return markdown only.","Use exactly these top-level sections in this order:","## Summary","## Decisions","## Action Items","## Risks","## Open Questions","## Next Steps","Your job is to turn rough meeting transcripts into notes that someone could actually share after the meeting.","Rules:","- No nested bullets.","- Use flat bullets only.","- Every bullet must contain concrete information from the transcript or manual notes.","- Do not invent facts, owners, deadlines, or decisions.","- If something is implied but not explicit, write it cautiously or put it under Open Questions.","- Never output placeholders like 'Action:' or 'Decision:' without content.","- If a section has nothing useful, write '- None.'","- Keep it short, direct, and readable.","Section guidance:","- Summary: 2 to 4 bullets on what the meeting was about, what changed, and the main outcome.","- Decisions: only include clear decisions or agreements that were actually made.","- Action Items: only include concrete follow-ups. Include owner and timing only if stated. If owner is missing, say 'Owner not specified.'","- Risks: only include blockers, concerns, dependencies, or failure points that were explicitly raised.","- Open Questions: capture unresolved issues, pending confirmations, or unclear points from the discussion.","- Next Steps: list the immediate follow-on steps that are most likely to happen next.","Quality bar:","- Prefer fewer strong bullets over many weak ones.","- Remove filler, repetition, and transcript noise.","- Rewrite spoken language into clean written language without changing meaning."].join(`
+`):["You write clean, concise voice note summaries from rough transcripts.","Return markdown only.","Use exactly these top-level sections in this order:","## Summary","## Key Points","## Follow-Up","Rules:","- No nested bullets.","- Use flat bullets only.","- Every bullet must contain concrete information.","- Do not invent facts or follow-ups that are not supported by the note.","- Never output placeholders without content.","- If a section has nothing useful, write '- None.'","- Rewrite spoken language into clean written language."].join(`
+`)},{role:"user",content:[`Title: ${e.title}`,`Type: ${g(e.type).label}`,"",e.type==="meeting"?"Task: Produce meeting notes that capture what happened, what was decided, what still needs action, and what remains unresolved.":"Task: Produce a clear summary of the voice note and any concrete follow-up.","","Context and manual notes:",e.manualNotes||"None provided","","Transcript:",e.transcript||"None provided"].join(`
+`)}]}function le(e,n){return[{role:"system",content:["Rewrite the provided markdown into clean final notes.","Return markdown only.","Keep the same factual meaning, but fix structure.","Do not invent facts or add new content.","Rules:","- No nested bullets.","- No repeated placeholder bullets.","- Each bullet must contain content.","- Use exactly these headings:",e.type==="meeting"?`## Summary
+## Decisions
+## Action Items
+## Risks
+## Open Questions
+## Next Steps`:`## Summary
+## Key Points
+## Follow-Up`].join(`
+`)},{role:"user",content:["Rewrite this broken draft:",n||"No draft provided."].join(`
+
+`)}]}function Pe(e,n,r){let i=V[r]??V.professional,a=e.type==="meeting"?`## Summary
+## Decisions
+## Action Items
+## Risks
+## Open Questions
+## Next Steps`:`## Summary
+## Key Points
+## Follow-Up`,s=String(n||"").trim(),c=e.transcript?.trim()||"None provided.",l=e.manualNotes?.trim()||"None provided.";return[{role:"system",content:["Rewrite the provided notes into a clean final draft.","Return markdown only.",i.instruction,"Do not invent facts, names, dates, or action items.","Preserve the factual meaning.","Use exactly these headings:",a,"Rules:","- No nested bullets.","- Use flat bullets only.","- Every bullet must contain concrete content.","- Remove placeholders and repeated fragments.","- If a section has nothing useful, write '- None.'"].join(`
+`)},{role:"user",content:[`Title: ${e.title}`,`Type: ${g(e.type).label}`,"","Current notes draft:",s||"No draft yet.","","Context and manual notes:",l,"","Transcript:",c].join(`
+`)}]}function xe(e){let n=e.transcript?.trim()||"None provided.",r=e.manualNotes?.trim()||"None provided.",i=e.meetingNotes?.trim()||"None provided.";return[{role:"system",content:["Write a concise, professional title for the provided notes.","Return plain text only.","Do not use markdown, quotes, labels, or multiple options.","Keep it under 8 words.","Use title case.","Be specific and factual."].join(`
+`)},{role:"user",content:[`Current title: ${e.title}`,`Type: ${g(e.type).label}`,"","Transcript:",n,"","Context and manual notes:",r,"","Current notes:",i].join(`
+`)}]}function Ae(e,n){let r=String(e||"").replace(/\r/g," ").replace(/\n+/g," ").replace(/^["'`#*\-\s]+|["'`#*\-\s]+$/g,"").replace(/^(title|summary|meeting|voice note)\s*:\s*/i,"").replace(/\s{2,}/g," ").trim();return r&&r.split(/\s+/).slice(0,8).join(" ").replace(/[.:;,\-–—]+$/g,"").trim()||n}function j(e,n){return at(st(e),n)}function at(e,n){let r=n==="meeting"?["## Summary","## Decisions","## Action Items","## Risks","## Open Questions","## Next Steps"]:["## Summary","## Key Points","## Follow-Up"],i=String(e||"").replace(/\r/g,"").split(`
+`).map(l=>l.replace(/\t/g," ").trimEnd()),a=[];for(let l of i){let d=l.trim();if(!d){a.at(-1)!==""&&a.push("");continue}if(/^#{1,3}\s+/.test(d)){a.push(d.replace(/^#{1,3}\s*/,"## "));continue}if(/^[-*]\s+/.test(d)||/^\d+\.\s+/.test(d)){let m=d.replace(/^[-*]\s+/,"").replace(/^\d+\.\s+/,"").trim();Ee(m)||a.push(`- ${m}`);continue}Ee(d)||a.push(d)}let c=a.filter((l,d)=>!(l===""&&a[d-1]==="")).join(`
+`).trim();return r.every(l=>!c.includes(l))?`${r.join(`
+
+`)}
+
+- ${c||"None."}`:c}function de(e){let n=String(e||""),r=n.match(/(^|\n)-\s*(action|action item|decision|summary|risk|follow-up|next step|open question)s?:?\s*$/gim)||[],i=n.match(/^\s{2,}[-*]\s+/gm)||[],a=n.match(/^## .+\n(?=\n## |\s*$)/gm)||[],s=ct(n),c=ut(n);return r.length>=2||i.length>=2||a.length>=2||s>=3||c>=2}function Ee(e){return/^(action|action item|decision|summary|risk|follow-up|next step|open question|key point)s?:?\s*$/i.test(e)}function st(e){let n=String(e||"").replace(/\r/g," ");return n=n.replace(/\b([a-z]{2,})\b(?:\s+\1\b){2,}/gi,"$1"),n=n.replace(/(\b[\w/.-]+\b(?:\s+\b[\w/.-]+\b){1,5})(?:\s+\1\b){2,}/gi,"$1"),n=n.replace(/([/,-])(?:\s*\1){2,}/g,"$1"),n=n.replace(/\s{2,}/g," "),n=n.replace(/\n{3,}/g,`
+
+`),n.trim()}function ct(e){return(String(e||"").match(/\b([a-z]{2,})\b(?:\s+\1\b){2,}/gi)||[]).length}function ut(e){return(String(e||"").match(/(\b[\w/.-]+\b(?:\s+\b[\w/.-]+\b){1,5})(?:\s+\1\b){2,}/gi)||[]).length}var Z=Ie({getSettings:()=>o.settings,onStatus:pt,onError:e=>{console.error(e),u("The on-device AI worker failed to load")}});lt().catch(e=>{console.error(e),u(e.message||"Failed to start app")});async function lt(){dt(),await Et(),await qe(),o.records=await q(),o.activeId=o.records[0]?.id??null,et(),St(),Q(!1),U("voice","preview"),U("notes","preview"),ze({replace:!0}),Z.scheduleWarmup()}function dt(){t.startMeetingCard.addEventListener("click",pe),t.startVoiceNoteCard.addEventListener("click",me),t.openLibraryButton.addEventListener("click",O),t.recorderBackButton.addEventListener("click",H),t.recorderLibraryButton.addEventListener("click",O),t.recorderModelsButton.addEventListener("click",()=>t.settingsDialog.showModal()),t.recorderTitleInput.addEventListener("input",ht),t.recorderStartButton.addEventListener("click",Ce),t.recorderStopButton.addEventListener("click",De),t.recorderContinueButton.addEventListener("click",wt),t.voiceBackButton.addEventListener("click",H),t.voiceLibraryButton.addEventListener("click",O),t.voiceModelsButton.addEventListener("click",()=>t.settingsDialog.showModal()),t.voiceTitleInput.addEventListener("input",z),t.voiceTranscriptInput.addEventListener("input",z),t.voiceSummaryInput.addEventListener("input",z),t.voicePreviewTab.addEventListener("click",()=>U("voice","preview")),t.voiceRawTab.addEventListener("click",()=>U("voice","raw")),t.voiceCopyButton.addEventListener("click",Bt),t.voiceStartButton.addEventListener("click",Ce),t.voiceStopButton.addEventListener("click",De),t.voiceTranscribeButton.addEventListener("click",Oe),t.voiceGenerateButton.addEventListener("click",Ue),t.voiceRewriteButton.addEventListener("click",$e),t.voiceSpeakButton.addEventListener("click",Fe),t.voiceSaveButton.addEventListener("click",Ve),t.voiceDeleteButton.addEventListener("click",je),t.homeButton.addEventListener("click",H),t.workspaceLibraryButton.addEventListener("click",O),t.newMeetingButton.addEventListener("click",pe),t.newVoiceNoteButton.addEventListener("click",me),t.libraryHomeButton.addEventListener("click",H),t.libraryModelsButton.addEventListener("click",()=>t.settingsDialog.showModal()),t.libraryMeetingButton.addEventListener("click",pe),t.libraryVoiceButton.addEventListener("click",me),t.searchInput.addEventListener("input",e=>{o.query=e.target.value.trim().toLowerCase(),B()}),t.librarySearchInput.addEventListener("input",e=>{o.libraryQuery=e.target.value.trim().toLowerCase(),N()}),document.querySelectorAll(".filter-chip").forEach(e=>{e.addEventListener("click",()=>{o.filter=e.dataset.filter,document.querySelectorAll(".filter-chip").forEach(n=>n.classList.toggle("active",n===e)),B()})}),t.titleInput.addEventListener("input",D),t.typeSelect.addEventListener("change",D),t.manualNotesInput.addEventListener("input",D),t.transcriptInput.addEventListener("input",D),t.meetingNotesInput.addEventListener("input",D),t.notesPreviewTab.addEventListener("click",()=>U("notes","preview")),t.notesRawTab.addEventListener("click",()=>U("notes","raw")),t.notesCopyButton.addEventListener("click",It),t.transcribeButton.addEventListener("click",Oe),t.generateButton.addEventListener("click",Ue),t.notesRewriteButton.addEventListener("click",$e),t.speakButton.addEventListener("click",Fe),t.saveButton.addEventListener("click",Ve),t.deleteButton.addEventListener("click",je),t.settingsButton.addEventListener("click",()=>t.settingsDialog.showModal()),t.saveSettingsButton.addEventListener("click",Tt),t.resetSettingsButton.addEventListener("click",qt),t.installButton.addEventListener("click",Nt),window.addEventListener("beforeinstallprompt",e=>{e.preventDefault(),o.deferredPrompt=e,t.installButton.hidden=!1}),window.addEventListener("appinstalled",()=>{o.deferredPrompt=null,t.installButton.hidden=!0,u("App installed")}),window.addEventListener("popstate",()=>{ze({syncRoute:!1})})}function pt(e,n){e==="stt"?F(n):(e==="llm"||e==="tts")&&b(n)}function ve(e){let n=mt(e);return o.records.unshift(n),o.activeId=n.id,B(),N(),S(),E(n).catch(r=>{console.error(r),u("Failed to save record")}),n}function mt(e){let n=new Date().toISOString();return{id:crypto.randomUUID(),type:e,title:g(e).fallbackTitle,manualNotes:"",transcript:"",meetingNotes:"",audioBlob:null,audioType:"",createdAt:n,updatedAt:n}}function f(){return o.records.find(e=>e.id===o.activeId)}function D(){let e=f();e&&(e.title=t.titleInput.value.trim()||T(t.typeSelect.value),e.type=t.typeSelect.value,e.manualNotes=t.manualNotesInput.value.trim(),e.transcript=t.transcriptInput.value.trim(),e.meetingNotes=t.meetingNotesInput.value.trim(),e.updatedAt=new Date().toISOString(),Ye(g(e.type)),ne(e),W(e),x(e),B(),N(),P(e,!1))}function z(){let e=f();e&&(e.title=t.voiceTitleInput.value.trim()||T("voice-note"),e.type="voice-note",e.transcript=t.voiceTranscriptInput.value.trim(),e.meetingNotes=t.voiceSummaryInput.value.trim(),e.updatedAt=new Date().toISOString(),t.titleInput.value=e.title,t.typeSelect.value="voice-note",t.transcriptInput.value=e.transcript,t.meetingNotesInput.value=e.meetingNotes,W(e),x(e),B(),N(),P(e,!1))}function S(){let e=f();if(!e)return;let n=g(e.type);t.workspaceHeading.textContent=e.type==="meeting"?"Meeting notes workspace.":"Voice note workspace.",t.editorHeading.textContent=e.title,t.titleInput.value=e.title,t.typeSelect.value=e.type,t.manualNotesInput.value=e.manualNotes,t.transcriptInput.value=e.transcript,t.meetingNotesInput.value=e.meetingNotes,t.generateButton.textContent=n.generateLabel,Ye(n),ne(e),W(e),x(e),X(),o.audioUrl&&(URL.revokeObjectURL(o.audioUrl),o.audioUrl=null),e.audioBlob instanceof Blob?(o.audioUrl=URL.createObjectURL(e.audioBlob),t.audioPlayer.src=o.audioUrl,t.audioPlayer.hidden=!1,t.recorderAudioPlayer.src=o.audioUrl,t.recorderAudioPlayer.hidden=!1,t.voiceAudioPlayer.src=o.audioUrl,t.voiceAudioPlayer.hidden=!1):(t.audioPlayer.removeAttribute("src"),t.audioPlayer.hidden=!0,t.recorderAudioPlayer.removeAttribute("src"),t.recorderAudioPlayer.hidden=!0,t.voiceAudioPlayer.removeAttribute("src"),t.voiceAudioPlayer.hidden=!0),P(e,!0),B(),N()}function B(){let e=ie(o.records,{query:o.query,filter:o.filter});if(t.recordCount.textContent=ae(e.length),!e.length){t.recordList.innerHTML='<div class="empty-state">No records match the current filter. Create a new capture or clear the search.</div>';return}t.recordList.innerHTML=se(e,{activeId:o.activeId,previewLength:120,dataAttribute:"data-id"}),t.recordList.querySelectorAll(".record-card").forEach(n=>{n.addEventListener("click",()=>{_e(n.dataset.id)})})}function N(){let e=ie(o.records,{query:o.libraryQuery});if(t.libraryRecordCount.textContent=ae(e.length),!e.length){t.libraryRecordList.innerHTML='<div class="empty-state">No recordings match the current search.</div>';return}t.libraryRecordList.innerHTML=se(e,{previewLength:160,dataAttribute:"data-library-id"}),t.libraryRecordList.querySelectorAll("[data-library-id]").forEach(n=>{n.addEventListener("click",()=>_e(n.dataset.libraryId))})}function _e(e){o.activeId=e,S();let n=f();if(n){if(n.type==="meeting"){Qe(n)?te():ye();return}ee()}}async function Ce(){if(!o.isRecording){if(!navigator.mediaDevices?.getUserMedia){u("Microphone capture is not available in this browser");return}try{let e=await navigator.mediaDevices.getUserMedia({audio:!0}),n=Te();o.chunks=[],o.mediaRecorder=n?new MediaRecorder(e,{mimeType:n}):new MediaRecorder(e),o.mediaRecorder.addEventListener("dataavailable",r=>{r.data.size&&o.chunks.push(r.data)}),o.mediaRecorder.addEventListener("stop",async()=>{let r=o.mediaRecorder?.mimeType||"audio/webm",i=new Blob(o.chunks,{type:r}),a=f();a&&(a.audioBlob=i,a.audioType=r,a.updatedAt=new Date().toISOString(),await E(a),o.records=await q(),S(),t.recorderContinueButton.disabled=!1,u("Recording attached"),queueMicrotask(()=>{yt(a.id)})),e.getTracks().forEach(s=>s.stop()),Q(!1),F("Recorder idle")}),o.mediaRecorder.start(),t.recorderContinueButton.disabled=!0,Q(!0),F("Recording live")}catch(e){console.error(e),Q(!1),u("Microphone permission or capture failed")}}}function De(){!o.mediaRecorder||!o.isRecording||o.mediaRecorder.stop()}async function Oe(){let e=f();await We(e)}async function Ue(){let e=f();await Ge(e)}async function $e(){let e=f();if(!e)return;let n=o.currentView==="voice"?t.voiceRewriteSelect.value:t.notesRewriteSelect.value;await vt(e,n)}async function ft(){let e=f(),n=e?.meetingNotes||e?.transcript||e?.manualNotes;if(!n){u("No note content available for playback");return}t.speakButton.disabled=!0,t.voiceSpeakButton.disabled=!0,o.activeTasks.tts=!0,b("Preparing Kokoro"),fe();try{let r=M("synthesize",{text:n,voice:o.settings.kokoroVoice},{onPartial:(a,s)=>{a?.audioBuffer&&bt(s.id,a.audioBuffer,a.mimeType)}});o.ttsPlayback.activeRequestId=r.requestId,t.speakButton.disabled=!1,t.voiceSpeakButton.disabled=!1,X();let i=await r;if(!i?.ok)throw new Error("Kokoro did not finish streaming audio");if(ge(i.requestId)){Lt(i.requestId);return}kt(i.requestId),await Rt(i.requestId),u("Playback complete")}catch(r){console.error(r),fe(),u(r.message||"TTS failed")}finally{o.activeTasks.tts=!1,t.speakButton.disabled=!1,t.voiceSpeakButton.disabled=!1,b("Notes generator idle"),X(),G()}}async function Ve(){let e=f();e&&(o.currentView==="voice"?z():D(),await E(e),o.records=await q(),B(),N(),S(),u("Record saved"))}async function je(){let e=f();if(!e)return;if(await Re(e.id),o.records=await q(),o.activeId=o.records[0]?.id??null,B(),N(),!o.activeId){O(),u("Record deleted");return}S();let n=f();o.currentView==="voice"&&n?.type==="meeting"?te():o.currentView==="workspace"&&n?.type==="voice-note"&&ee(),u("Record deleted")}async function We(e,n={}){let{toastOnSuccess:r=!0,toastOnError:i=!0,successMessage:a="Transcript ready",busyMessage:s="Preparing audio"}=n;if(!e?.audioBlob)return i&&u("Record audio before transcription"),!1;if(o.activeTasks.stt)return!1;t.transcribeButton.disabled=!0,t.voiceTranscribeButton.disabled=!0,o.activeTasks.stt=!0,F(s);try{let c=await Ne(e.audioBlob,16e3),l=await M("transcribe",{audio:c.buffer,language:o.settings.whisperLanguage},{onPartial:d=>{e.transcript=d.text||"",e.updatedAt=new Date().toISOString(),o.activeId===e.id&&(t.transcriptInput.value=e.transcript,t.voiceTranscriptInput.value=e.transcript,P(e,!1))}});if(!l?.text)throw new Error("Whisper did not return transcript text");return e.transcript=l.text.trim(),e.updatedAt=new Date().toISOString(),await E(e),o.records=await q(),S(),r&&u(a),!0}catch(c){return console.error(c),i&&u(c.message||"Transcription failed"),!1}finally{o.activeTasks.stt=!1,t.transcribeButton.disabled=!1,t.voiceTranscribeButton.disabled=!1,G()}}async function Ge(e,n={}){let{toastOnSuccess:r=!0,toastOnError:i=!0,successMessage:a="Notes created",emptyMessage:s="Add context or transcript before generating notes",busyMessage:c="Preparing Qwen"}=n;if(!e)return!1;if(![e.manualNotes,e.transcript].filter(Boolean).join(`
+
+`).trim())return i&&u(s),!1;if(o.activeTasks.llm)return!1;J(!0),o.activeTasks.llm=!0,b(c);let d=Me(e);try{let m=await M("generate",{messages:d,maxNewTokens:e.type==="meeting"?420:260},{onPartial:y=>{e.meetingNotes=y.text||"",e.updatedAt=new Date().toISOString(),o.activeId===e.id&&(t.meetingNotesInput.value=e.meetingNotes,t.voiceSummaryInput.value=e.meetingNotes,x(e),P(e,!1))}});if(!m?.text)throw new Error("Qwen did not return note content");let w=j(m.text,e.type);if(de(w)){b("Repairing draft");let y=await M("generate",{messages:le(e,w),maxNewTokens:e.type==="meeting"?320:220});w=j(y?.text||w,e.type)}return e.meetingNotes=w,await Ke(e),e.updatedAt=new Date().toISOString(),await E(e),o.records=await q(),S(),r&&u(a),!0}catch(m){return console.error(m),i&&u(m.message||"Note generation failed"),!1}finally{o.activeTasks.llm=!1,J(!1),b("Notes generator idle"),G()}}async function vt(e,n,r={}){let{toastOnSuccess:i=!0,toastOnError:a=!0}=r;if(!e)return!1;if(![e.meetingNotes,e.transcript,e.manualNotes].filter(Boolean).join(`
+
+`).trim())return a&&u("Add transcript or notes before refining"),!1;if(o.activeTasks.llm)return!1;let c=V[n]??V.professional;J(!0),o.activeTasks.llm=!0,b(c.busyLabel);try{let l=await M("generate",{messages:Pe(e,e.meetingNotes,n),maxNewTokens:e.type==="meeting"?420:260},{onPartial:m=>{e.meetingNotes=m.text||"",e.updatedAt=new Date().toISOString(),o.activeId===e.id&&(t.meetingNotesInput.value=e.meetingNotes,t.voiceSummaryInput.value=e.meetingNotes,x(e),P(e,!1))}});if(!l?.text)throw new Error("Qwen did not return refined notes");let d=j(l.text,e.type);if(de(d)){b("Repairing draft");let m=await M("generate",{messages:le(e,d),maxNewTokens:e.type==="meeting"?320:220});d=j(m?.text||d,e.type)}return e.meetingNotes=d,await Ke(e),e.updatedAt=new Date().toISOString(),await E(e),o.records=await q(),S(),i&&u(`${c.label} applied`),!0}catch(l){return console.error(l),a&&u(l.message||"Rewrite failed"),!1}finally{o.activeTasks.llm=!1,J(!1),b("Notes generator idle"),G()}}async function yt(e){let n=o.records.find(a=>a.id===e);if(!n?.audioBlob||!await We(n,{toastOnSuccess:!1,toastOnError:!0,busyMessage:"Auto-transcribing recording"}))return;await Ge(n,{toastOnSuccess:!1,toastOnError:!0,successMessage:n.type==="meeting"?"Meeting notes ready":"Voice note summary ready",busyMessage:n.type==="meeting"?"Summarizing meeting":"Summarizing voice note"})&&u(n.type==="meeting"?"Transcript and meeting notes ready":"Transcript and summary ready")}async function Ke(e){if(!e||gt(e)||![e.transcript,e.manualNotes,e.meetingNotes].filter(Boolean).join(`
+
+`).trim())return!1;try{let r=await M("generate",{messages:xe(e),maxNewTokens:32}),i=Ae(r?.text,T(e.type));return!i||i===T(e.type)?!1:(e.title=i,o.activeId===e.id&&(t.titleInput.value=i,t.voiceTitleInput.value=e.type==="voice-note"?i:t.voiceTitleInput.value,t.recorderTitleInput.value=i),!0)}catch(r){return console.error(r),!1}}async function M(e,n,r={}){return Z.call(e,n,r)}function P(e,n){t.editorHeading.textContent=e.title,t.modeMetric.textContent=g(e.type).label,t.transcriptMetric.textContent=`${Le(e.transcript)} words`,t.savedMetric.textContent=n?A(e.updatedAt):"Draft",t.voiceSavedMetric.textContent=n?A(e.updatedAt):"Draft"}function H(e={}){let{syncRoute:n=!0,replace:r=!1}=e;if(o.isRecording){u("Stop recording first");return}o.currentView="landing",document.body.dataset.view="landing",t.landingShell.hidden=!1,t.recorderShell.hidden=!0,t.voiceShell.hidden=!0,t.libraryShell.hidden=!0,t.appShell.hidden=!0,Je({silent:!0}),n&&_(I.landing,{replace:r})}function ye(e={}){let{syncRoute:n=!0,replace:r=!1}=e;o.currentView="recorder",document.body.dataset.view="recorder",t.landingShell.hidden=!0,t.recorderShell.hidden=!1,t.voiceShell.hidden=!0,t.libraryShell.hidden=!0,t.appShell.hidden=!0,n&&_(I.meetings,{replace:r})}function ee(e={}){let{syncRoute:n=!0,replace:r=!1}=e;o.currentView="voice",document.body.dataset.view="voice",t.landingShell.hidden=!0,t.recorderShell.hidden=!0,t.voiceShell.hidden=!1,t.libraryShell.hidden=!0,t.appShell.hidden=!0,n&&_(I.notes,{replace:r})}function O(e={}){let{syncRoute:n=!0,replace:r=!1}=e;if(o.isRecording){u("Stop recording first");return}o.currentView="library",document.body.dataset.view="library",N(),t.landingShell.hidden=!0,t.recorderShell.hidden=!0,t.voiceShell.hidden=!0,t.libraryShell.hidden=!1,t.appShell.hidden=!0,n&&_(I.recordings,{replace:r})}function te(e={}){let{syncRoute:n=!0,replace:r=!1}=e;o.currentView="workspace",document.body.dataset.view="workspace",t.landingShell.hidden=!0,t.recorderShell.hidden=!0,t.voiceShell.hidden=!0,t.libraryShell.hidden=!0,t.appShell.hidden=!1,n&&_(I.meetings,{replace:r})}function ze(e={}){let{syncRoute:n=!0,replace:r=!1}=e,i=K(window.location.pathname);if(i===I.recordings){O({syncRoute:n,replace:r});return}if(i===I.notes){let a=He("voice-note");S(),W(a),ee({syncRoute:n,replace:r});return}if(i===I.meetings){let a=He("meeting");S(),Qe(a)?te({syncRoute:n,replace:r}):(ne(a),ye({syncRoute:n,replace:r}));return}H({syncRoute:n,replace:r})}function He(e){let n=f();if(n?.type===e)return n;let r=o.records.find(i=>i.type===e);return r?(o.activeId=r.id,r):ve(e)}function Qe(e){return e?!!(e.audioBlob instanceof Blob||e.manualNotes.trim()||e.transcript.trim()||e.meetingNotes.trim()):!1}function gt(e){if(!e)return!1;let n=e.title?.trim();return!!(n&&n!==T(e.type))}function _(e,n={}){let r=K(e);if(K(window.location.pathname)===r)return;let i=n.replace?"replaceState":"pushState";window.history[i]({},"",r)}function Ye(e){t.composeHeading.textContent=e.composeHeading,t.manualNotesLabel.textContent=e.manualNotesLabel,t.manualNotesInput.placeholder=e.manualNotesPlaceholder,t.transcriptInput.placeholder=e.transcriptPlaceholder,t.meetingNotesInput.placeholder=e.notesPlaceholder,x(f())}function pe(){if(o.isRecording){u("Stop recording first");return}let e=ve("meeting");ne(e),ye()}function me(){if(o.isRecording){u("Stop recording first");return}let e=ve("voice-note");W(e),ee()}function wt(){if(o.isRecording){u("Stop recording first");return}S(),te()}function ne(e=f()){if(!e)return;let n=g(e.type);t.recorderEyebrow.textContent=n.label,t.recorderHeading.textContent=e.type==="meeting"?"Record the meeting first.":"Record the voice note first.",t.recorderTitleInput.value=e.title===n.fallbackTitle?"":e.title,t.recorderTitleInput.placeholder=e.type==="meeting"?"Board sync, sprint review, interview loop...":"Voice memo, follow-up, idea capture...",t.recorderContinueButton.disabled=!(e.audioBlob instanceof Blob)}function W(e=f()){if(!e)return;let n=e.title===T("voice-note")?"":e.title;t.voiceHeading.textContent=e.audioBlob instanceof Blob?"Voice note ready to refine.":"Capture a quick note.",t.voiceTitleInput.value=e.type==="voice-note"?n:e.title,t.voiceTranscriptInput.value=e.type==="voice-note"?e.transcript:"",t.voiceSummaryInput.value=e.type==="voice-note"?e.meetingNotes:"",x(e),t.voiceSavedMetric.textContent=A(e.updatedAt),Xe()}function x(e=f()){let n=e?.meetingNotes||"";t.meetingNotesPreview.innerHTML=ue(n,"Generated notes will render here once the draft is ready."),t.voiceSummaryPreview.innerHTML=ue(e?.type==="voice-note"?n:"","The summary preview shows up here.")}function U(e,n){let r=n==="preview",i=e==="voice"?{previewTab:t.voicePreviewTab,rawTab:t.voiceRawTab,previewPane:t.voicePreviewPane,rawPane:t.voiceRawPane}:{previewTab:t.notesPreviewTab,rawTab:t.notesRawTab,previewPane:t.notesPreviewPane,rawPane:t.notesRawPane};i.previewTab.classList.toggle("active",r),i.rawTab.classList.toggle("active",!r),i.previewTab.setAttribute("aria-selected",String(r)),i.rawTab.setAttribute("aria-selected",String(!r)),i.previewTab.tabIndex=r?0:-1,i.rawTab.tabIndex=r?-1:0,i.previewPane.hidden=!r,i.rawPane.hidden=r}function ht(){let e=f();if(!e)return;let n=t.recorderTitleInput.value.trim()||T(e.type);e.title=n,e.updatedAt=new Date().toISOString(),t.titleInput.value=n,P(e,!1),B()}function F(e){t.recordingStatus.textContent=e,t.recorderStatus.textContent=e,t.voiceRecordingStatus.textContent=e}function Q(e){o.isRecording=e,document.body.classList.toggle("is-recording",e),t.recorderStartButton.disabled=e,t.recorderStopButton.disabled=!e,t.voiceStartButton.disabled=e,t.voiceStopButton.disabled=!e}function b(e){t.llmStatus.textContent=e,t.voiceAiStatus.textContent=e}function J(e){t.generateButton.disabled=e,t.voiceGenerateButton.disabled=e,t.notesRewriteButton.disabled=e,t.voiceRewriteButton.disabled=e}function St(){t.runtimeMetric.textContent=navigator.gpu?"GPU if available":"Browser runtime"}function fe(){let e=o.ttsPlayback;e.currentAudio&&(e.currentAudio.pause(),e.currentAudio.src="",e.currentAudio=null),e.queue.forEach(n=>URL.revokeObjectURL(n.url)),e.queue=[],e.streamDone=!1,re()}function bt(e,n,r){let i=o.ttsPlayback;if(i.activeRequestId==null&&(i.activeRequestId=e),i.activeRequestId!==e||ge(e))return;let a=new Blob([n],{type:r||"audio/wav"}),s=URL.createObjectURL(a);i.queue.push({url:s}),Y()}function Y(){let e=o.ttsPlayback;if(e.currentAudio||!e.queue.length){re();return}let n=e.queue.shift(),r=new Audio(n.url);e.currentAudio=r,r.addEventListener("ended",()=>{URL.revokeObjectURL(n.url),e.currentAudio=null,Y()},{once:!0}),r.addEventListener("error",()=>{URL.revokeObjectURL(n.url),e.currentAudio=null,Y()},{once:!0}),r.play().catch(()=>{URL.revokeObjectURL(n.url),e.currentAudio=null,Y()})}function kt(e){let n=o.ttsPlayback;n.activeRequestId===e&&!ge(e)&&(n.streamDone=!0,re())}function Rt(e){let n=o.ttsPlayback;return new Promise(r=>{n.drainResolvers.push({requestId:e,resolve:r}),re()})}function re(){let e=o.ttsPlayback;if(!(e.streamDone&&e.activeRequestId!=null&&!e.currentAudio&&!e.queue.length))return;let r=e.activeRequestId,i=e.drainResolvers;e.drainResolvers=[],e.activeRequestId=null,e.streamDone=!1,i.forEach(a=>{a.requestId===r?a.resolve():e.drainResolvers.push(a)})}function Fe(){if(o.activeTasks.tts){Je();return}ft()}function Je(e={}){let{silent:n=!1}=e,r=o.ttsPlayback,i=r.activeRequestId;i!=null&&r.cancelledRequestIds.add(i),fe(),o.activeTasks.tts=!1,b("Playback stopped"),X(),G(),n||u("Playback stopped")}function X(){t.speakButton.textContent=o.activeTasks.tts?"Stop playback":"Play audio",Xe()}function Xe(){t.voiceSpeakButton.textContent=o.activeTasks.tts?"Stop playback":"Play audio"}async function It(){await Ze(t.meetingNotesInput.value,"Notes copied")}async function Bt(){await Ze(t.voiceSummaryInput.value,"Summary copied")}async function Ze(e,n){let r=String(e||"").trim();if(!r){u("Nothing to copy");return}try{await navigator.clipboard.writeText(r),u(n)}catch(i){console.error(i),u("Clipboard access failed")}}function ge(e){return o.ttsPlayback.cancelledRequestIds.has(e)}function Lt(e){o.ttsPlayback.cancelledRequestIds.delete(e)}function u(e){t.toast.textContent=e,t.toast.classList.add("visible"),clearTimeout(u.timeoutId),u.timeoutId=window.setTimeout(()=>t.toast.classList.remove("visible"),2600)}function G(){o.activeTasks.stt||F("Recorder idle"),!o.activeTasks.llm&&!o.activeTasks.tts&&(t.llmStatus.textContent="Notes generator idle",t.voiceAiStatus.textContent="Summary idle")}function et(){t.sttEndpointInput.value=o.settings.whisperModel,t.sttModelInput.value=o.settings.whisperLanguage,t.llmEndpointInput.value=o.settings.qwenModel,t.llmModelInput.value=o.settings.qwenDtype,t.ttsEndpointInput.value=o.settings.kokoroModel,t.ttsModelInput.value=o.settings.kokoroDtype,t.ttsVoiceInput.value=o.settings.kokoroVoice}function Tt(){o.settings={whisperModel:t.sttEndpointInput.value.trim()||h.whisperModel,whisperLanguage:t.sttModelInput.value.trim()||h.whisperLanguage,qwenModel:t.llmEndpointInput.value.trim()||h.qwenModel,qwenDtype:t.llmModelInput.value.trim()||h.qwenDtype,kokoroModel:t.ttsEndpointInput.value.trim()||h.kokoroModel,kokoroDtype:t.ttsModelInput.value.trim()||h.kokoroDtype,kokoroVoice:t.ttsVoiceInput.value.trim()||h.kokoroVoice},localStorage.setItem($,JSON.stringify(o.settings)),Z.reconfigure(),t.settingsDialog.close(),u("Model settings updated")}function qt(){o.settings={...h},localStorage.setItem($,JSON.stringify(o.settings)),et(),Z.reconfigure(),u("Defaults restored")}async function Nt(){if(!o.deferredPrompt){u("Install is available from your browser menu");return}o.deferredPrompt.prompt(),await o.deferredPrompt.userChoice,o.deferredPrompt=null,t.installButton.hidden=!0}function Et(){return window.__SONICFLOW_SINGLE_FILE__||!("serviceWorker"in navigator)?Promise.resolve():navigator.serviceWorker.register("/sw.js")}
+</script>
+  </body>
+</html>

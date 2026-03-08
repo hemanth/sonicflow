@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#050505" />
+    <meta
+      name="description"
+      content="Installable meeting notes workspace with recording, transcription, note drafting, and voice note capture."
+    />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icons/icon-192.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.svg" />
+    <link rel="stylesheet" href="/styles.min.css" />
+    <title>Sonicflow Notes</title>
+  </head>
+  <body>
+    <main id="appMain">
+    <section class="landing-shell" id="landingShell">
+      <div class="landing-copy">
+        <p class="eyebrow">Sonicflow</p>
+        <h1>What do you want to capture?</h1>
+        <p class="landing-text">
+          Pick a starting flow and the workspace will adapt around it.
+        </p>
+      </div>
+
+      <div class="landing-grid">
+        <button class="landing-card" id="startMeetingCard" type="button">
+          <span class="landing-kicker">Meeting</span>
+          <strong>Record a meeting</strong>
+          <p>Capture discussion, transcribe it, then turn it into decisions and action items.</p>
+        </button>
+
+        <button class="landing-card" id="startVoiceNoteCard" type="button">
+          <span class="landing-kicker">Voice note</span>
+          <strong>Record a voice note</strong>
+          <p>Capture a quick thought, summary, or update and turn it into a clean note.</p>
+        </button>
+      </div>
+
+      <div class="landing-footer">
+        <button class="ghost-button" id="openLibraryButton" type="button">Browse all recordings</button>
+      </div>
+    </section>
+
+    <section class="recorder-shell" id="recorderShell" hidden>
+      <div class="recorder-topbar">
+        <div class="recorder-topbar-actions">
+          <button class="ghost-button" id="recorderBackButton" type="button">Back</button>
+          <button class="ghost-button" id="recorderLibraryButton" type="button">Recordings</button>
+        </div>
+        <button class="ghost-button" id="recorderModelsButton" type="button">Models</button>
+      </div>
+
+      <div class="recorder-card">
+        <p class="eyebrow" id="recorderEyebrow">Meeting</p>
+        <h1 id="recorderHeading">Record the meeting first.</h1>
+        <p class="recorder-copy">
+          Keep this step focused. Capture the room, then continue into notes when you are ready.
+        </p>
+
+        <label class="field recorder-title-field">
+          <span>Title</span>
+          <input id="recorderTitleInput" type="text" placeholder="Board sync, sprint review, interview loop..." />
+        </label>
+
+        <div class="recorder-status" id="recorderStatus">Recorder idle</div>
+
+        <div class="recorder-actions">
+          <button class="primary-button recorder-primary record-button" id="recorderStartButton" type="button">Record meeting</button>
+          <button class="ghost-button stop-button" id="recorderStopButton" type="button" disabled>Stop</button>
+          <button class="ghost-button" id="recorderContinueButton" type="button" disabled>Continue to notes</button>
+        </div>
+
+        <audio id="recorderAudioPlayer" controls preload="metadata" hidden></audio>
+      </div>
+    </section>
+
+    <section class="voice-shell" id="voiceShell" hidden>
+      <div class="voice-topbar">
+        <div class="recorder-topbar-actions">
+          <button class="ghost-button" id="voiceBackButton" type="button">Back</button>
+          <button class="ghost-button" id="voiceLibraryButton" type="button">Recordings</button>
+        </div>
+        <button class="ghost-button" id="voiceModelsButton" type="button">Models</button>
+      </div>
+
+      <div class="voice-card">
+        <p class="eyebrow">Voice note</p>
+        <h1 id="voiceHeading">Capture a quick note.</h1>
+        <label class="field">
+          <span>Title</span>
+          <input id="voiceTitleInput" type="text" placeholder="Follow-up, idea, reminder..." />
+        </label>
+
+        <div class="voice-actions">
+          <button class="primary-button record-button" id="voiceStartButton" type="button">Record note</button>
+          <button class="ghost-button stop-button" id="voiceStopButton" type="button" disabled>Stop</button>
+          <button class="ghost-button" id="voiceTranscribeButton" type="button">Transcribe</button>
+          <button class="ghost-button" id="voiceGenerateButton" type="button">Summarize</button>
+          <button class="ghost-button" id="voiceSpeakButton" type="button">Play audio</button>
+          <button class="ghost-button" id="voiceSaveButton" type="button">Save</button>
+          <button class="ghost-button danger-button" id="voiceDeleteButton" type="button">Delete</button>
+        </div>
+
+        <div class="voice-meta">
+          <span class="panel-status" id="voiceRecordingStatus">Recorder idle</span>
+          <span class="panel-status" id="voiceAiStatus">Summary idle</span>
+          <span class="panel-status" id="voiceSavedMetric">Draft</span>
+        </div>
+
+        <audio id="voiceAudioPlayer" controls preload="metadata" hidden></audio>
+
+        <div class="voice-grid">
+          <label class="field">
+            <span>Transcript</span>
+            <textarea id="voiceTranscriptInput" rows="10" placeholder="Transcript appears here."></textarea>
+          </label>
+
+          <div class="field field-panel">
+            <div class="field-head">
+              <span>Summary</span>
+              <div class="panel-toolbar">
+                <div class="tiny-tabs" role="tablist" aria-label="Voice summary view">
+                  <button class="tab-button active" id="voicePreviewTab" type="button" role="tab" aria-selected="true" aria-controls="voicePreviewPane" tabindex="0">Preview</button>
+                  <button class="tab-button" id="voiceRawTab" type="button" role="tab" aria-selected="false" aria-controls="voiceRawPane" tabindex="-1">Raw md</button>
+                </div>
+                <div class="rewrite-toolbar">
+                  <select id="voiceRewriteSelect" class="toolbar-select" aria-label="Voice note rewrite option">
+                    <option value="grammar">Fix grammar</option>
+                    <option value="professional">Make professional</option>
+                    <option value="concise">Tighten writing</option>
+                    <option value="executive">Executive summary</option>
+                  </select>
+                  <button class="ghost-button" id="voiceRewriteButton" type="button">Refine</button>
+                  <button class="ghost-button" id="voiceCopyButton" type="button">Copy</button>
+                </div>
+              </div>
+            </div>
+            <div class="markdown-pane" id="voicePreviewPane" role="tabpanel" aria-labelledby="voicePreviewTab">
+              <div class="markdown-preview" id="voiceSummaryPreview" aria-live="polite"></div>
+            </div>
+            <div class="markdown-pane" id="voiceRawPane" role="tabpanel" aria-labelledby="voiceRawTab" hidden>
+              <textarea id="voiceSummaryInput" rows="10" placeholder="Summary appears here."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="library-shell" id="libraryShell" hidden>
+      <header class="topbar">
+        <div class="brand-block">
+          <p class="eyebrow">Sonicflow</p>
+          <div class="brand-line">
+            <h1>All recordings.</h1>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="ghost-button" id="libraryHomeButton" type="button">Home</button>
+          <button class="ghost-button" id="libraryModelsButton" type="button">Models</button>
+          <button class="primary-button" id="libraryMeetingButton" type="button">New meeting</button>
+          <button class="secondary-button" id="libraryVoiceButton" type="button">New voice note</button>
+        </div>
+      </header>
+
+      <div class="library-card panel">
+        <div class="library-header">
+          <span class="pill" id="libraryRecordCount">0 items</span>
+        </div>
+        <label class="field library-search">
+          <span>Search recordings</span>
+          <input id="librarySearchInput" type="search" placeholder="Search titles, transcripts, summaries" />
+        </label>
+        <div class="record-list library-list" id="libraryRecordList" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <div class="app-shell" id="appShell" hidden>
+      <header class="topbar">
+        <div class="brand-block">
+          <p class="eyebrow">Sonicflow</p>
+          <div class="brand-line">
+            <h1 id="workspaceHeading">Meeting notes workspace.</h1>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="ghost-button" id="homeButton" type="button">Home</button>
+          <button class="ghost-button" id="workspaceLibraryButton" type="button">Recordings</button>
+          <button class="ghost-button" id="installButton" type="button" hidden>Install app</button>
+          <button class="ghost-button" id="settingsButton" type="button">Models</button>
+          <button class="primary-button" id="newMeetingButton" type="button">New meeting</button>
+          <button class="secondary-button" id="newVoiceNoteButton" type="button">New voice note</button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <aside class="sidebar panel">
+          <div class="sidebar-header">
+            <div>
+              <p class="section-label">Library</p>
+              <h2>Recent captures</h2>
+            </div>
+            <span class="pill" id="recordCount">0 items</span>
+          </div>
+
+          <label class="field">
+            <span>Search</span>
+            <input id="searchInput" type="search" placeholder="Search titles, transcripts, notes" />
+          </label>
+
+          <div class="filter-row" role="tablist" aria-label="Record filters">
+            <button class="filter-chip active" data-filter="all" type="button">All</button>
+            <button class="filter-chip" data-filter="meeting" type="button">Meetings</button>
+            <button class="filter-chip" data-filter="voice-note" type="button">Voice notes</button>
+          </div>
+
+          <div class="record-list" id="recordList" aria-live="polite"></div>
+        </aside>
+
+        <section class="workspace">
+          <section class="editor-grid">
+            <article class="panel capture-panel">
+              <div class="panel-header">
+                <div>
+                  <p class="section-label">Note</p>
+                  <h3 id="editorHeading">Untitled meeting</h3>
+                </div>
+                <span class="panel-status" id="modeMetric">Meeting</span>
+              </div>
+
+              <div class="field-grid">
+                <label class="field">
+                  <span>Title</span>
+                  <input id="titleInput" type="text" placeholder="Board sync, sprint review, interview loop..." />
+                </label>
+
+                <label class="field">
+                  <span>Type</span>
+                  <select id="typeSelect">
+                    <option value="meeting">Meeting</option>
+                    <option value="voice-note">Voice note</option>
+                  </select>
+                </label>
+              </div>
+
+              <label class="field">
+                <span id="manualNotesLabel">Context and manual notes</span>
+                <textarea
+                  id="manualNotesInput"
+                  rows="7"
+                  placeholder="Agenda, participants, follow-up items, or raw note fragments."
+                ></textarea>
+                </label>
+
+              <div class="meta-row">
+                <span class="panel-status" id="recordingStatus">Recorder idle</span>
+                <span class="panel-status" id="transcriptMetric">0 words</span>
+                <span class="panel-status" id="savedMetric">Draft</span>
+                <span class="panel-status" id="runtimeMetric">Browser local</span>
+              </div>
+
+              <audio id="audioPlayer" controls preload="metadata" hidden></audio>
+
+              <label class="field">
+                <span>Transcript</span>
+                <textarea
+                  id="transcriptInput"
+                  rows="10"
+                  placeholder="Transcript appears here after transcription. You can edit it before generating final notes."
+                ></textarea>
+              </label>
+            </article>
+
+            <article class="panel notes-panel">
+              <div class="panel-header">
+                <div>
+                  <p class="section-label">Compose</p>
+                  <h3 id="composeHeading">Structured notes</h3>
+                </div>
+                <span class="panel-status" id="llmStatus">Notes generator idle</span>
+              </div>
+
+              <div class="notes-actions">
+                <button class="ghost-button" id="transcribeButton" type="button">Transcribe</button>
+                <button class="ghost-button" id="saveButton" type="button">Save</button>
+                <button class="primary-button" id="generateButton" type="button">Create meeting notes</button>
+                <button class="ghost-button" id="speakButton" type="button">Play audio</button>
+                <button class="ghost-button danger-button" id="deleteButton" type="button">Delete</button>
+              </div>
+
+              <label class="field">
+                <div class="field-head">
+                  <span>Final notes</span>
+                  <div class="panel-toolbar">
+                    <div class="tiny-tabs" role="tablist" aria-label="Meeting notes view">
+                      <button class="tab-button active" id="notesPreviewTab" type="button" role="tab" aria-selected="true" aria-controls="notesPreviewPane" tabindex="0">Preview</button>
+                      <button class="tab-button" id="notesRawTab" type="button" role="tab" aria-selected="false" aria-controls="notesRawPane" tabindex="-1">Raw md</button>
+                    </div>
+                    <div class="rewrite-toolbar">
+                      <select id="notesRewriteSelect" class="toolbar-select" aria-label="Notes rewrite option">
+                        <option value="grammar">Fix grammar</option>
+                        <option value="professional">Make professional</option>
+                        <option value="concise">Tighten writing</option>
+                        <option value="executive">Executive summary</option>
+                      </select>
+                      <button class="ghost-button" id="notesRewriteButton" type="button">Refine</button>
+                      <button class="ghost-button" id="notesCopyButton" type="button">Copy</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="markdown-pane" id="notesPreviewPane" role="tabpanel" aria-labelledby="notesPreviewTab">
+                  <div class="markdown-preview" id="meetingNotesPreview" aria-live="polite"></div>
+                </div>
+                <div class="markdown-pane" id="notesRawPane" role="tabpanel" aria-labelledby="notesRawTab" hidden>
+                  <textarea
+                    id="meetingNotesInput"
+                    rows="18"
+                    placeholder="Generated notes, action items, decisions, risks, and next steps."
+                  ></textarea>
+                </div>
+              </label>
+            </article>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="settings-dialog" id="settingsDialog">
+      <form method="dialog" class="settings-card">
+        <div class="dialog-header">
+          <div>
+            <p class="section-label">Models</p>
+            <h2>On-device AI runtime</h2>
+          </div>
+          <button class="icon-button" value="cancel" type="submit" aria-label="Close">Close</button>
+        </div>
+
+        <div class="settings-grid">
+          <label class="field">
+            <span>Whisper model</span>
+            <input id="sttEndpointInput" type="text" />
+          </label>
+          <label class="field">
+            <span>Whisper language</span>
+            <input id="sttModelInput" type="text" placeholder="en" />
+          </label>
+
+          <label class="field">
+            <span>Qwen model</span>
+            <input id="llmEndpointInput" type="text" />
+          </label>
+          <label class="field">
+            <span>Qwen dtype</span>
+            <input id="llmModelInput" type="text" placeholder="q4" />
+          </label>
+
+          <label class="field">
+            <span>Kokoro model</span>
+            <input id="ttsEndpointInput" type="text" />
+          </label>
+          <label class="field">
+            <span>Kokoro dtype</span>
+            <input id="ttsModelInput" type="text" placeholder="q8" />
+          </label>
+
+          <label class="field">
+            <span>Kokoro voice</span>
+            <input id="ttsVoiceInput" type="text" placeholder="af_bella" />
+          </label>
+        </div>
+
+        <p class="dialog-note">
+          First use downloads models into browser storage. Whisper is the lightest path here,
+          Kokoro is moderate, and Qwen is the heavy step. If your browser exposes GPU
+          acceleration, the app uses it. Otherwise it falls back to the browser runtime.
+        </p>
+
+        <div class="dialog-actions">
+          <button class="ghost-button" id="resetSettingsButton" type="button">Reset defaults</button>
+          <button class="primary-button" id="saveSettingsButton" type="button">Save models</button>
+        </div>
+      </form>
+    </dialog>
+
+    </main>
+
+    <div class="toast" id="toast" aria-live="polite"></div>
+
+    <script type="module" src="/app.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "sonicflow-notes",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:single": "node scripts/build-single-file.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.1"
+  }
+}

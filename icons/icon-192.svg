@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" role="img" aria-label="Sonicflow icon">
+  <rect width="192" height="192" rx="44" fill="#050505" />
+  <rect x="18" y="18" width="156" height="156" rx="34" fill="none" stroke="rgba(255,255,255,0.18)" />
+  <path d="M56 123c0-27.062 17.938-46 40-46s40 18.938 40 46" fill="none" stroke="#fafafa" stroke-width="14" stroke-linecap="round" />
+  <path d="M78 90c0-10.493 8.507-19 19-19s19 8.507 19 19v18c0 10.493-8.507 19-19 19s-19-8.507-19-19Z" fill="#fafafa" />
+</svg>
